@@ -49,4 +49,7 @@ class Game
   # Method (.each ?) to check if value from guess_code is included in selected_code
   end
 
+  # maybe check for hit or included at the same time with each_with_index. First included?, if no -> certain entree in seperate array at same index; if yes, same possition?, 
+  # if no -> certain entree in seperate arrat at same index, if yes -> differetn entree etc....
+
 end
