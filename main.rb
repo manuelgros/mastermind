@@ -2,14 +2,10 @@
 
 # Class to create a code (currently: randomly)
 class Code
-  attr_reader :possible_codes
+  attr_reader :code
 
   def initialize
-    @possible_codes = Array("1".."9").permutation(4).to_a
-  end
-
-  def select_code(database_array)
-    database_array.sample.to_s
+    @code = Array.new(4).map { |val| val = rand(1..9) }
   end
 end
 
@@ -25,8 +21,7 @@ end
 # Class for the Game functions
 class Game
   def initialize
-    @code_database = Code.new
-    @selected_code = select_code(@code_database)
+    @selected_code = Code.new
     @player = Player.new
   end
 
