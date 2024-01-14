@@ -5,7 +5,7 @@ class Code
   attr_reader :code
 
   def initialize
-    @code = Array.new(4).map { |val| val = rand(1..9) }
+    @code = Array.new(4).map { |val| val = rand(1..9).to_s }
   end
 end
 
@@ -23,6 +23,7 @@ class Game
   def initialize
     @selected_code = Code.new
     @player = Player.new
+    @round_counter = 0
   end
 
   def player_guess
@@ -31,9 +32,11 @@ class Game
     if guessed_code.length != select_code.length
       puts 'Please make sure that you only type in 4 number between 1 and 9:'
       guessed_code = gets.chomp.to_s.split('')
-    else 
-      # code
+    else
+      guessed_code
     end
+
+    
   end
 
   def check_for_hit(num)
