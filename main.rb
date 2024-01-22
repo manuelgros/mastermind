@@ -41,8 +41,8 @@ class Game
     array1[i] == array2[i]
   end
 
-  def check_for_included
-  # Method (.each ?) to check if value from guess_code is included in selected_code
+  def check_for_included(array1, array2, i)
+    array2.include?(array1[i])
   end
 
   # maybe check for hit or included at the same time with each_with_index. First included?, if no -> certain entree in seperate array at same index; if yes, same possition?, 
