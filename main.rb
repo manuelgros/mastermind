@@ -41,8 +41,8 @@ class Game
     array1[index] == @selected_code[index]
   end
 
-  def check_for_included(array1, array2, i)
-    array2.include?(array1[i])
+  def check_for_included(array1, index)
+    @selected_code.include?(array1[index])
   end
 
   # maybe check for hit or included at the same time with each_with_index. First included?, if no -> certain entree in seperate array at same index; if yes, same possition?, 
