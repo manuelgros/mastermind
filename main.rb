@@ -37,8 +37,8 @@ class Game
     end
   end
 
-  def check_for_hit(array1, array2, i)
-    array1[i] == array2[i]
+  def check_for_hit(array1, index)
+    array1[index] == @selected_code[index]
   end
 
   def check_for_included(array1, array2, i)
