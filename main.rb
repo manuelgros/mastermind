@@ -41,7 +41,7 @@ class Game
     num == @solution[index]
   end
 
-  def guess_included?(num, index)
+  def guess_included?(num)
     @solution.include?(num)
   end
 
