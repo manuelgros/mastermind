@@ -45,6 +45,19 @@ class Game
     @solution.include?(array1[index])
   end
 
+  def check_guess(guess_array)
+  hint = []
+  guess_array.map.with_index do |val, i|
+    if direct_hit?(val, i)
+      hint[i] = 🟢
+    elsif guess_included?(val, i)
+      hint[i] = 🟡
+    else
+      hint[i] = 🔴
+    end
+    hint
+  end
+
   # maybe check for hit or included at the same time with each_with_index. First included?, if no -> certain entree in seperate array at same index; if yes, same possition?, 
   # if no -> certain entree in seperate arrat at same index, if yes -> differetn entree etc....
 
