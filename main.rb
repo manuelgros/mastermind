@@ -35,12 +35,10 @@ class Game
     else
       guessed_code
     end
-
-    
   end
 
-  def check_for_hit(num)
-    # for loop to check each position against each other for direct hit
+  def check_for_hit(array1, array2, i)
+    array1[i] == array2[i]
   end
 
   def check_for_included
