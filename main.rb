@@ -37,12 +37,12 @@ class Game
     end
   end
 
-  def direct_hit?(array1, index)
-    array1[index] == @solution[index]
+  def direct_hit?(num, index)
+    num == @solution[index]
   end
 
-  def guess_included?(array1, index)
-    @solution.include?(array1[index])
+  def guess_included?(num, index)
+    @solution.include?(num)
   end
 
   def check_guess(guess_array)
