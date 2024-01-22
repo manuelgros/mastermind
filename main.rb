@@ -37,11 +37,11 @@ class Game
     end
   end
 
-  def check_for_hit(array1, index)
+  def direct_hit?(array1, index)
     array1[index] == @selected_code[index]
   end
 
-  def check_for_included(array1, index)
+  def guess_included?(array1, index)
     @selected_code.include?(array1[index])
   end
 
