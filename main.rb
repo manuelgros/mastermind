@@ -48,17 +48,17 @@ class Game
   end
 
   def check_guess(guess_array)
-  hint = []
+    hint = []
     guess_array.map.with_index do |val, i|
       if direct_hit?(val, i)
-        hint[i] = "🟢"
+        hint[i] = '🟢'
       elsif guess_included?(val, i)
-        hint[i] = "🟡"
+        hint[i] = '🟡'
       else
-        hint[i] = "🔴"
+        hint[i] = '🔴'
       end
-      hint
     end
+    hint
   end
 
   def player_win?(array)
@@ -67,7 +67,7 @@ class Game
 
   def rounds_left(num)
     if num > @ROUNDS_TO_PLAY 
-      print "No more tries left, sorry. Game over!"
+      print 'No more tries left, sorry. Game over!'
     else
       print "You have #{@ROUNDS_TO_PLAY - num} tries left"
     end
