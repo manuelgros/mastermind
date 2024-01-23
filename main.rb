@@ -24,6 +24,7 @@ class Game
     @solution = Code.new
     @player = Player.new
     @round_counter = 0
+    @ROUNDS_TO_PLAY = 8
   end
 
   def player_guess
@@ -33,6 +34,7 @@ class Game
       puts 'Please make sure that you only type in 4 number between 1 and 9:'
       player_guess = gets.chomp.to_s.split('')
     else
+      @round_counter += 1
       player_guess
     end
   end
@@ -47,18 +49,27 @@ class Game
 
   def check_guess(guess_array)
   hint = []
-  guess_array.map.with_index do |val, i|
-    if direct_hit?(val, i)
-      hint[i] = 🟢
-    elsif guess_included?(val, i)
-      hint[i] = 🟡
-    else
-      hint[i] = 🔴
+    guess_array.map.with_index do |val, i|
+      if direct_hit?(val, i)
+        hint[i] = "🟢"
+      elsif guess_included?(val, i)
+        hint[i] = "🟡"
+      else
+        hint[i] = "🔴"
+      end
+      hint
     end
-    hint
   end
 
-  # maybe check for hit or included at the same time with each_with_index. First included?, if no -> certain entree in seperate array at same index; if yes, same possition?, 
-  # if no -> certain entree in seperate arrat at same index, if yes -> differetn entree etc....
+  def player_win?(array)
+    array == @solution
+  end
 
+  def rounds_left(num)
+    if num > @ROUNDS_TO_PLAY 
+      print "No more tries left, sorry. Game over!"
+    else
+      print "You have #{@ROUNDS_TO_PLAY - num} tries left"
+    end
+  end
 end
