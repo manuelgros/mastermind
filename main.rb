@@ -72,4 +72,5 @@ class Game
       print "You have #{@ROUNDS_TO_PLAY - num} tries left"
     end
   end
+
 end
