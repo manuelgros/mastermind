@@ -5,7 +5,7 @@ STEPS FOR GAME:
 3. Set RoundCount to 0
 4. The player can enter his/her name
 5. The player can start giving guesses
-6. Rounds are being played until either
+6. Rounds are being played until either...
   6.1 the player guesses the correct code (PLAYER WIN) OR
   6.2 the game went 8 rounds without a correct guess (COMPUTER WIN)
 7. The game finishes 
