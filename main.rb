@@ -29,10 +29,10 @@ class Game
     @round_counter = 0
   end
 
-  def player_guess
+  def get_player_guess
     puts "#{@player.name} type in your guess:"
     player_guess = gets.chomp.to_s.split('')
-    if player_guess.length != select_code.length
+    if player_guess.length != 4
       puts 'Please make sure that you only type in 4 number between 1 and 9:'
       player_guess = gets.chomp.to_s.split('')
     else
@@ -52,13 +52,10 @@ class Game
   def check_guess(guess_array)
     hint = []
     guess_array.map.with_index do |val, i|
-      if direct_hit?(val, i)
-        hint[i] = '🟢'
-      elsif guess_included?(val, i)
-        hint[i] = '🟡'
-      else
-        hint[i] = '🔴'
-      end
+      return hint[i] = '🟢' if direct_hit?(val, i)
+      return hint[i] = '🟡' if guess_included?(val, i)\
+
+      hint[i] = '🔴'
     end
     hint
   end
