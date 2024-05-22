@@ -26,7 +26,7 @@ class Game
   def initialize
     @solution = Code.new
     @player = Player.new
-    @round_counter = 0
+    @round = 0
   end
 
   def get_player_guess
@@ -36,7 +36,7 @@ class Game
       puts 'Please make sure that you only type in 4 number between 1 and 9:'
       player_guess = gets.chomp.to_s.split('')
     else
-      @round_counter += 1
+      @round += 1
       player_guess
     end
   end
@@ -64,12 +64,11 @@ class Game
     array == @solution
   end
 
-  def rounds_left(num)
+  def round_counter(num)
     if num > @ROUNDS_TO_PLAY 
       print 'No more tries left, sorry. Game over!'
     else
       print "You have #{@ROUNDS_TO_PLAY - num} tries left"
     end
   end
-
 end
