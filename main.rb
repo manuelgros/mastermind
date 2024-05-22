@@ -20,11 +20,13 @@ end
 
 # Class for the Game functions
 class Game
+
+  @@ROUNDS_TO_PLAY = 8
+
   def initialize
     @solution = Code.new
     @player = Player.new
     @round_counter = 0
-    @ROUNDS_TO_PLAY = 8
   end
 
   def player_guess
