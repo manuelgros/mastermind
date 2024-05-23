@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 require 'pry-byebug'
-# Class to create a code (currently: randomly)
-class Code
-  attr_reader :code
 
-  def initialize
-    @code = Array.new(4).map { |val| val = rand(1..9).to_s }
+# Module for Code creation
+module CreateableCode
+  def generate_code
+    Array.new(4).map { rand(1..9).to_s }
   end
 end
 
@@ -20,12 +19,13 @@ end
 
 # Class for the Game functions
 class Game
+  include CreateableCode
   attr_accessor :solution, :round, :player
 
   @@max_guesses = 8
 
   def initialize
-    @solution = Code.new
+    @solution = generate_code
     @player = Player.new
     @round = 0
   end
