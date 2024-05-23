@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'pry-byebug'
 # Class to create a code (currently: randomly)
 class Code
   attr_reader :code
@@ -20,6 +20,8 @@ end
 
 # Class for the Game functions
 class Game
+  attr_accessor :solution, :round, :player
+
   @@max_guesses = 8
 
   def initialize
@@ -38,6 +40,7 @@ class Game
       retry
     else
       player_guess
+      binding.pry
     end
   end
 
@@ -75,4 +78,12 @@ class Game
   def round_counter
     round + 1
   end
+
+  def play_round
+    check_guess(getting_player_guess)
+    check_round_counter(round_count)
+  end
 end
+
+game = Game.new
+game.play_round
