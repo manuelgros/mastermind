@@ -56,12 +56,12 @@ class Game
   def check_guess(guess_array)
     hint = []
     guess_array.map.with_index do |guessed_number, i|
-      return hint[i] = '🟢' if direct_hit?(guessed_number, i)
-      return hint[i] = '🟡' if guess_included?(guessed_number, i)\
+      next hint[i] = '🟢' if direct_hit?(guessed_number, i)
+      next hint[i] = '🟡' if guess_included?(guessed_number, i)
 
       hint[i] = '🔴'
     end
-    puts hint
+    puts "#{hint}"
   end
 
   def code_cracked?(array)
@@ -87,5 +87,5 @@ class Game
 end
 
 game = Game.new
-binding.pry
+# binding.pry
 game.play_round
