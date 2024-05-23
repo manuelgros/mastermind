@@ -20,7 +20,6 @@ end
 
 # Class for the Game functions
 class Game
-
   @@ROUNDS_TO_PLAY = 8
 
   def initialize
@@ -31,10 +30,12 @@ class Game
 
   def get_player_guess
     puts "#{@player.name} type in your guess:"
-    player_guess = gets.chomp.to_s.split('')
-    if player_guess.length != 4
-      puts 'Please make sure that you only type in 4 number between 1 and 9:'
+    begin
       player_guess = gets.chomp.to_s.split('')
+      raise if player_guess.length != 4 || player_guess.all?(Integer)
+    rescue
+      puts 'Please make sure that you only type in 4 numbers between 1 and 9:'
+      retry
     else
       @round += 1
       player_guess
