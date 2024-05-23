@@ -20,7 +20,7 @@ end
 
 # Class for the Game functions
 class Game
-  @@ROUNDS_TO_PLAY = 8
+  @@max_guesses = 8
 
   def initialize
     @solution = Code.new
@@ -65,10 +65,10 @@ class Game
   end
 
   def check_round_counter(num)
-    if num > @ROUNDS_TO_PLAY 
+    if num > @@max_guesses
       print 'That was your last guess. Game over!'
     else
-      print "You have #{@ROUNDS_TO_PLAY - num} tries left"
+      print "You have #{@@max_guesses - num} tries left"
     end
   end
 
