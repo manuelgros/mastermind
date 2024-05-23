@@ -28,7 +28,7 @@ class Game
     @round = 0
   end
 
-  def get_player_guess
+  def getting_player_guess
     puts "#{@player.name} type in your guess:"
     begin
       player_guess = gets.chomp.to_s.split('')
@@ -37,7 +37,6 @@ class Game
       puts 'Please make sure that you only type in 4 numbers between 1 and 9:'
       retry
     else
-      @round += 1
       player_guess
     end
   end
@@ -52,24 +51,28 @@ class Game
 
   def check_guess(guess_array)
     hint = []
-    guess_array.map.with_index do |val, i|
-      return hint[i] = '🟢' if direct_hit?(val, i)
-      return hint[i] = '🟡' if guess_included?(val, i)\
+    guess_array.map.with_index do |guessed_number, i|
+      return hint[i] = '🟢' if direct_hit?(guessed_number, i)
+      return hint[i] = '🟡' if guess_included?(guessed_number, i)\
 
       hint[i] = '🔴'
     end
     hint
   end
 
-  def player_win?(array)
+  def code_cracked?(array)
     array == @solution
   end
 
-  def round_counter(num)
+  def check_round_counter(num)
     if num > @ROUNDS_TO_PLAY 
-      print 'No more tries left, sorry. Game over!'
+      print 'That was your last guess. Game over!'
     else
       print "You have #{@ROUNDS_TO_PLAY - num} tries left"
     end
+  end
+
+  def round_counter
+    round + 1
   end
 end
