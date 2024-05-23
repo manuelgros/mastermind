@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'pry-byebug'
 
 # Module for Code creation
@@ -21,6 +22,7 @@ end
 class Game
   include CreateableCode
   attr_accessor :solution, :round, :player
+  attr_reader :max_guesses
 
   @@max_guesses = 8
 
@@ -40,16 +42,15 @@ class Game
       retry
     else
       player_guess
-      binding.pry
     end
   end
 
   def direct_hit?(num, index)
-    num == @solution[index]
+    num.to_s == @solution[index]
   end
 
-  def guess_included?(num)
-    @solution.include?(num)
+  def guess_included?(num, _index)
+    @solution.include?(num.to_s)
   end
 
   def check_guess(guess_array)
@@ -60,7 +61,7 @@ class Game
 
       hint[i] = '🔴'
     end
-    hint
+    puts hint
   end
 
   def code_cracked?(array)
@@ -81,9 +82,10 @@ class Game
 
   def play_round
     check_guess(getting_player_guess)
-    check_round_counter(round_count)
+    check_round_counter(round_counter)
   end
 end
 
 game = Game.new
+binding.pry
 game.play_round
