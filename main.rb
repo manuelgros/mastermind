@@ -95,9 +95,7 @@ class Game
   def play_one_round
     check_guess(getting_player_guess)
     calc_rounds_left(round_counter)
-  end
-
-  def 
+  end 
 end
 
 game = Game.new
