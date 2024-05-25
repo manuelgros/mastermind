@@ -2,6 +2,7 @@
 
 require 'pry-byebug'
 
+# Modules 
 # Module for Code creation
 module CreateableCode
   def generate_code
@@ -18,9 +19,20 @@ class Player
   end
 end
 
+# Modules for Notifications
+module PrintableText
+  def text_wrong_code
+    puts 'Please make sure that you only type in 4 numbers between 1 and 9:'
+  end
+
+  def text_player_lost
+    puts " Sorry #{name}, that was your last guess. GAME OVER."
+  end
+end
+
 # Class for the Game functions
 class Game
-  include CreateableCode
+  include CreateableCode, PrintableText
   attr_accessor :solution, :round, :player
   attr_reader :max_guesses
 
@@ -38,7 +50,7 @@ class Game
       player_guess = gets.chomp.to_s.split('')
       raise if player_guess.length != 4 || player_guess.all?(Integer)
     rescue
-      puts 'Please make sure that you only type in 4 numbers between 1 and 9:'
+      text_wrong_code
       retry
     else
       player_guess
@@ -61,14 +73,14 @@ class Game
 
       hint[i] = '🔴'
     end
-    puts "#{hint}"
+    puts hint.to_s
   end
 
   def code_cracked?(array)
     array == @solution
   end
 
-  def check_round_counter(num)
+  def calc_rounds_left(num)
     if num > @@max_guesses
       print 'That was your last guess. Game over!'
     else
@@ -80,12 +92,14 @@ class Game
     round + 1
   end
 
-  def play_round
+  def play_one_round
     check_guess(getting_player_guess)
-    check_round_counter(round_counter)
+    calc_rounds_left(round_counter)
   end
+
+  def 
 end
 
 game = Game.new
 # binding.pry
-game.play_round
+game.play_one_round
