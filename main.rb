@@ -32,12 +32,16 @@ module PrintableText
   def text_player_won
     puts "Good job #{name}!! You cracked the code. A true Mastermind!"
   end
+
+  def text_rounds_left
+    puts "You have #{@@max_guesses - round_counter} tries left"
+  end
 end
 
 # Class for the Game functions
 class Game
   include CreateableCode, PrintableText
-  attr_accessor :solution, :round, :player
+  attr_accessor :solution, :round, :player, :player_guess
   attr_reader :max_guesses
 
   @@max_guesses = 8
@@ -46,6 +50,7 @@ class Game
     @solution = generate_code
     @player = Player.new
     @round = 0
+    @player_guess = []
   end
 
   def getting_player_guess
@@ -80,8 +85,8 @@ class Game
     puts hint.to_s
   end
 
-  def code_cracked?(array)
-    array == @solution
+  def code_cracked?(guess_array)
+    guess_array == @solution
   end
 
   def calc_rounds_left
@@ -99,7 +104,7 @@ class Game
 
   def game_ends?
     text_player_lost if calc_rounds_left.zero?
-    text_wrong_code if code_cracked?
+    text_wrong_code if code_cracked?(player_guess)
   end
 
   def play_full_game
