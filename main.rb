@@ -26,7 +26,11 @@ module PrintableText
   end
 
   def text_player_lost
-    puts " Sorry #{name}, that was your last guess. GAME OVER."
+    puts "Sorry #{name}, that was your last guess. GAME OVER."
+  end
+
+  def text_player_won
+    puts "Good job #{name}!! You cracked the code. A true Mastermind!"
   end
 end
 
@@ -80,12 +84,8 @@ class Game
     array == @solution
   end
 
-  def calc_rounds_left(num)
-    if num > @@max_guesses
-      print 'That was your last guess. Game over!'
-    else
-      print "You have #{@@max_guesses - num} tries left"
-    end
+  def calc_rounds_left
+    @@max_guesses - round_counter
   end
 
   def round_counter
@@ -94,10 +94,19 @@ class Game
 
   def play_one_round
     check_guess(getting_player_guess)
-    calc_rounds_left(round_counter)
-  end 
+    calc_rounds_left
+  end
+
+  def game_ends?
+    text_player_lost if calc_rounds_left.zero?
+    text_wrong_code if code_cracked?
+  end
+
+  def play_full_game
+    play_one_round until game_ends?
+  end
 end
 
 game = Game.new
 # binding.pry
-game.play_one_round
+game.play_full_game
