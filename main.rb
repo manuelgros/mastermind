@@ -15,6 +15,7 @@ class Player
   attr_reader :name
 
   def initialize
+    print 'Type in player name: '
     @name = gets.chomp
   end
 end
