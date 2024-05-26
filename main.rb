@@ -107,11 +107,11 @@ class Game
   end
 
   def game_ends?
-    if calc_rounds_left.zero?
-      text_player_lost
-      true
-    elsif code_cracked?(player_guess)
+    if code_cracked?(player_guess)
       text_player_won
+      true
+    elsif calc_rounds_left.zero?
+      text_player_lost
       true
     end
   end
