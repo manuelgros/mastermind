@@ -26,11 +26,11 @@ module PrintableText
   end
 
   def text_player_lost
-    puts "Sorry #{name}, that was your last guess. GAME OVER."
+    puts "Sorry #{Player.name}, that was your last guess. GAME OVER."
   end
 
   def text_player_won
-    puts "Good job #{name}!! You cracked the code. A true Mastermind!"
+    puts "Good job #{Player.name}!! You cracked the code. A true Mastermind!"
   end
 
   def text_rounds_left
@@ -58,13 +58,13 @@ class Game
   def getting_player_guess
     puts "#{@player.name} type in your guess:"
     begin
-      player_guess = gets.chomp.to_s.split('')
-      raise if player_guess.length != 4 || player_guess.all?(Integer)
+      @player_guess = gets.chomp.to_s.split('')
+      raise if @player_guess.length != 4 && @player_guess.all?(Integer)
     rescue
       text_wrong_code
       retry
     else
-      player_guess
+      @player_guess
     end
   end
 
@@ -92,22 +92,27 @@ class Game
   end
 
   def calc_rounds_left
-    @@max_guesses - round_counter
+    @@max_guesses - round
   end
 
   def round_counter
-    round + 1
+    @round += 1
   end
 
   def play_one_round
     check_guess(getting_player_guess)
-    calc_rounds_left
+    round_counter
     # binding.pry
   end
 
   def game_ends?
-    text_player_lost if calc_rounds_left.zero?
-    text_wrong_code if code_cracked?(player_guess)
+    if calc_rounds_left.zero?
+      text_player_lost
+      true
+    elsif code_cracked?(player_guess)
+      text_player_won
+      true
+    end
   end
 
   def play_full_game
@@ -116,5 +121,5 @@ class Game
 end
 
 game = Game.new
-binding.pry
+# binding.pry
 game.play_full_game
