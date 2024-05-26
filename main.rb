@@ -31,7 +31,7 @@ module PrintableText
   end
 
   def text_player_won
-    puts "Good job #{player.name} in #{round} tries!!\nYou cracked the code. A true Mastermind!"
+    puts "Good job #{player.name}, you cracked the code in #{round} tries!!\nA true Mastermind!"
   end
 
   def text_rounds_left
@@ -123,5 +123,5 @@ class Game
 end
 
 game = Game.new
-# binding.pry
+binding.pry
 game.play_full_game
