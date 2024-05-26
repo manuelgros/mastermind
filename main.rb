@@ -84,6 +84,7 @@ class Game
 
       hint[i] = '🔴'
     end
+    puts player_guess.to_s
     puts hint.to_s
   end
 
