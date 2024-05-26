@@ -27,11 +27,11 @@ module PrintableText
   end
 
   def text_player_lost
-    puts "Sorry #{Player.name}, that was your last guess. GAME OVER."
+    puts "Sorry #{player.name}, that was your last guess. GAME OVER."
   end
 
   def text_player_won
-    puts "Good job #{Player.name}!! You cracked the code. A true Mastermind!"
+    puts "Good job #{player.name} in #{round} tries!!\nYou cracked the code. A true Mastermind!"
   end
 
   def text_rounds_left
