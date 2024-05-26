@@ -2,7 +2,7 @@
 
 require 'pry-byebug'
 
-# Modules 
+# Modules
 # Module for Code creation
 module CreateableCode
   def generate_code
@@ -40,7 +40,9 @@ end
 
 # Class for the Game functions
 class Game
-  include CreateableCode, PrintableText
+  include CreateableCode
+  include PrintableText
+
   attr_accessor :solution, :round, :player, :player_guess
   attr_reader :max_guesses
 
@@ -100,6 +102,7 @@ class Game
   def play_one_round
     check_guess(getting_player_guess)
     calc_rounds_left
+    # binding.pry
   end
 
   def game_ends?
@@ -113,5 +116,5 @@ class Game
 end
 
 game = Game.new
-# binding.pry
+binding.pry
 game.play_full_game
