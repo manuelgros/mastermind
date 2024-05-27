@@ -2,21 +2,11 @@
 
 require 'pry-byebug'
 
-# Modules
+# ------------------ Modules ------------------
 # Module for Code creation
 module CreateableCode
   def generate_code
     Array.new(4).map { rand(1..9).to_s }
-  end
-end
-
-# Class for the Player
-class Player
-  attr_reader :name
-
-  def initialize
-    print 'Type in player name: '
-    @name = gets.chomp
   end
 end
 
@@ -40,6 +30,17 @@ module PrintableText
 
   def text_rounds_left
     puts "You have #{@@max_guesses - round_counter} tries left"
+  end
+end
+
+# ------------------ Classes ------------------
+# Class for the Player
+class Player
+  attr_reader :name
+
+  def initialize
+    print 'Type in player name: '
+    @name = gets.chomp
   end
 end
 
@@ -136,6 +137,7 @@ class Game
   end
 end
 
+# ------------------ Run Code ------------------
 game = Game.new
 binding.pry
 game.play_full_game
