@@ -73,8 +73,18 @@ class Game
     num.to_s == @solution[index]
   end
 
+  # removes all elements from solution that are already direct_hit? before checking for
+  # guess_included? to prevent fals positive 
+  def exclude_direct_hits(array)
+    temp_arr = []
+    array.each_with_index do |n, i|
+      temp_arr << n if array[i] != player_guess[i]
+    end
+    temp_arr
+  end
+
   def guess_included?(num, _index)
-    @solution.include?(num.to_s)
+    exclude_direct_hits(solution).include?(num.to_s)
   end
 
   def check_guess(guess_array)
