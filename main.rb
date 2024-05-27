@@ -31,7 +31,11 @@ module PrintableText
   end
 
   def text_player_won
-    puts "Good job #{player.name}, you cracked the code in #{round} tries!!\nA true Mastermind!"
+    if round == 1
+      puts "Good job #{player.name}, you cracked the code on your firs try!!\nA true Mastermind!"
+    else
+      puts "Good job #{player.name}, you cracked the code in #{round} tries!!\nA true Mastermind!"
+    end
   end
 
   def text_rounds_left
