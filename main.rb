@@ -57,7 +57,7 @@ class Game
   end
 
   def getting_player_guess
-    puts "#{@player.name} type in your guess:"
+    puts "#{@player.name} type in your #{round+1}. guess:"
     begin
       @player_guess = gets.chomp.to_s.split('')
       raise if @player_guess.length != 4 && @player_guess.all?(Integer)
