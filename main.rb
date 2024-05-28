@@ -33,7 +33,7 @@ module PrintableText
   end
 
   def text_rounds_left
-    puts "You have #{@@max_guesses - round_counter} tries left"
+    puts "You have #{@@max_guesses - add_round} tries left"
   end
 
   def text_hint(player_guess, hint)
@@ -127,17 +127,17 @@ class Game
     guess_array == @solution
   end
 
-  def calc_rounds_left
+  def rounds_left
     @@max_guesses - round
   end
 
-  def round_counter
+  def add_round
     @round += 1
   end
 
   def play_one_round
     check_guess(getting_player_guess)
-    round_counter
+    add_round
     # binding.pry
   end
 
@@ -145,7 +145,7 @@ class Game
     if code_cracked?(player_guess)
       text_player_won
       true
-    elsif calc_rounds_left.zero?
+    elsif rounds_left.zero?
       text_player_lost
       true
     end
