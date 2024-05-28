@@ -86,7 +86,7 @@ class Game
     text_type_guess
     begin
       @player_guess = gets.chomp.to_s.split('')
-      raise if @player_guess.length != 4 || @player_guess.all?(Integer)
+      raise if @player_guess.length != 4 || !@player_guess.all?(Integer)
     rescue
       text_wrong_code
       retry
