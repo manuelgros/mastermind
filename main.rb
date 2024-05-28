@@ -5,6 +5,8 @@ require 'pry-byebug'
 # ------------------ Modules ------------------
 # Module for Code creation
 module CreateableCode
+  private
+
   def generate_code
     Array.new(4).map { rand(1..9).to_s }
   end
@@ -12,6 +14,8 @@ end
 
 # Modules for Notifications
 module PrintableText
+  private
+
   def text_wrong_code
     puts 'Please make sure that you only type in 4 numbers between 1 and 9:'
   end
@@ -60,8 +64,8 @@ class Game
   include CreateableCode
   include PrintableText
 
-  attr_accessor :solution, :round, :player, :player_guess
-  attr_reader :max_guesses
+  attr_accessor :round, :player_guess
+  attr_reader :max_guesses, :solution, :player
 
   @@max_guesses = 8
 
@@ -71,6 +75,12 @@ class Game
     @round = 0
     @player_guess = []
   end
+
+  def play_full_game
+    play_one_round until game_ends?
+  end
+
+  private
 
   def getting_player_guess
     text_type_guess
@@ -139,10 +149,6 @@ class Game
       text_player_lost
       true
     end
-  end
-
-  def play_full_game
-    play_one_round until game_ends?
   end
 end
 
