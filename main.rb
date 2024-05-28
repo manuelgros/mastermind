@@ -31,6 +31,17 @@ module PrintableText
   def text_rounds_left
     puts "You have #{@@max_guesses - round_counter} tries left"
   end
+
+  def text_hint(player_guess, hint)
+    puts "| A  | B  | C  | D  |
+| #{player_guess[0]}  | #{player_guess[1]}  | #{player_guess[2]}  | #{player_guess[3]}  |
+| #{hint[0]} | #{hint[1]} | #{hint[2]} | #{hint[3]} |"
+  end
+
+  def text_type_guess
+    puts "#{@player.name.upcase} TYPE IN YOUR"
+    print "#{round + 1}. GUESS: "
+  end
 end
 
 # ------------------ Classes ------------------
@@ -40,7 +51,7 @@ class Player
 
   def initialize
     print 'Type in player name: '
-    @name = gets.chomp
+    @name = gets.chomp.capitalize
   end
 end
 
@@ -62,7 +73,7 @@ class Game
   end
 
   def getting_player_guess
-    puts "#{@player.name} type in your #{round+1}. guess:"
+    text_type_guess
     begin
       @player_guess = gets.chomp.to_s.split('')
       raise if @player_guess.length != 4 && @player_guess.all?(Integer)
@@ -75,11 +86,10 @@ class Game
   end
 
   def direct_hit?(num, index)
-    num.to_s == @solution[index]
+    num == @solution[index]
   end
 
-  # removes all elements from solution that are already direct_hit? before checking for
-  # guess_included? to prevent fals positive 
+  # removes all elements if dierected_hit? == true before check for included?
   def exclude_direct_hits(array)
     temp_arr = []
     array.each_with_index do |n, i|
@@ -89,7 +99,7 @@ class Game
   end
 
   def guess_included?(num, _index)
-    exclude_direct_hits(solution).include?(num.to_s)
+    exclude_direct_hits(solution).include?(num)
   end
 
   def check_guess(guess_array)
@@ -100,8 +110,7 @@ class Game
 
       hint[i] = '🔴'
     end
-    puts player_guess.to_s
-    puts hint.to_s
+    text_hint(guess_array, hint)
   end
 
   def code_cracked?(guess_array)
@@ -139,5 +148,5 @@ end
 
 # ------------------ Run Code ------------------
 game = Game.new
-binding.pry
+# binding.pry
 game.play_full_game
