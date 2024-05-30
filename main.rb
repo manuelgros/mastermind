@@ -83,6 +83,11 @@ class Game
 
   def play_full_game
     play_round until game_ends?
+    puts "Do you want to play another round? Y/N"
+    answer = gets.chomp.upcase
+    # N works, Y only repeats the qustion and answer option
+    play_full_game if answer == "Y"
+    exit if answer == "N"
   end
 
   private
