@@ -21,7 +21,9 @@ module PrintableText
   end
 
   def text_player_lost
-    puts "Sorry #{player.name}, that was your last guess. GAME OVER."
+    puts "Sorry #{player.name}, that was your last guess.
+The right code was #{solution[0]} #{solution[1]} #{solution[2]} #{solution[3]}.
+GAME OVER"
   end
 
   def text_player_won
@@ -81,12 +83,13 @@ class Game
   end
 
   private
+
   # Error not raised if guess is 4 letters FIX
   def getting_player_guess
     text_type_guess
     begin
       @player_guess = gets.chomp.to_s.split('')
-      raise if @player_guess.length != 4 || @player_guess.all?(!Integer)
+      raise if @player_guess.length != 4 || !@player_guess.all?('1'..'9')
     rescue
       text_wrong_code
       retry
