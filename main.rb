@@ -79,7 +79,7 @@ class Game
   end
 
   def play_full_game
-    play_one_round until game_ends?
+    play_round until game_ends?
   end
 
   private
@@ -98,7 +98,7 @@ class Game
     end
   end
 
-  def direct_hit?(num, index)
+  def number_right?(num, index)
     num == @solution[index]
   end
 
@@ -111,15 +111,15 @@ class Game
     temp_arr
   end
 
-  def guess_included?(num, _index)
+  def number_included?(num, _index)
     exclude_direct_hits(solution).include?(num)
   end
 
   def check_guess(guess_array)
     hint = []
     guess_array.map.with_index do |guessed_number, i|
-      next hint[i] = '🟢' if direct_hit?(guessed_number, i)
-      next hint[i] = '🟡' if guess_included?(guessed_number, i)
+      next hint[i] = '🟢' if number_right?(guessed_number, i)
+      next hint[i] = '🟡' if number_included?(guessed_number, i)
 
       hint[i] = '🔴'
     end
@@ -138,7 +138,7 @@ class Game
     @round += 1
   end
 
-  def play_one_round
+  def play_round
     check_guess(getting_player_guess)
     add_round
     # binding.pry
