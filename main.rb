@@ -16,6 +16,9 @@ end
 module PrintableText
   private
 
+  # Custom error class for guess format
+  class GuessError < StandardError; end
+
   def text_wrong_code
     puts 'Please make sure that you only type in 4 numbers between 1 and 9:'
   end
@@ -89,8 +92,8 @@ class Game
     text_type_guess
     begin
       @player_guess = gets.chomp.to_s.split('')
-      raise if @player_guess.length != 4 || !@player_guess.all?('1'..'9')
-    rescue
+      raise PrintableText::GuessError if @player_guess.length != 4 || !@player_guess.all?('1'..'9')
+    rescue PrintableText::GuessError
       text_wrong_code
       retry
     else
