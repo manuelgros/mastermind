@@ -68,7 +68,6 @@ end
 
 # ------------------ Classes ------------------
 # Class for the Player
-
 class Player
   attr_reader :name
 
