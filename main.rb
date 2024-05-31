@@ -19,17 +19,6 @@ module PrintableText
   # Custom error class for guess format
   class GuessError < StandardError; end
 
-  def text_game_descripton
-    puts "Welcome to MASTERMIND. Mastermind is a game of skill, in which two players engage in a battle of wits and logic. One of the players is called the CODEMAKER, and this player chooses, then hides, a secret code, which the other player, who is called the CODEBREAKER, must attempt to discover.\nThe CODEMAKER generates a code which is made up of four numbers, ranging from 1 to 9. The CODEBREAKER then tries to guess the code and receives a hint after each attempt:
-    🟢 if the number at is at its correct position.
-    🟡 if the number is indeed in the code BUT not at this position
-    🔴 if the number is not in the code.\n\n"
-  end
-
-  def text_player_codebreaker
-    puts "You are the CODEBREAKER. You have 8 tries to crack the secret combination. If you are ready to take on the computer type in your name and lets begin!\n"
-  end
-
   def text_wrong_code
     puts 'Please make sure that you only type in 4 numbers between 1 and 9:'
   end
@@ -86,8 +75,6 @@ class Game
   @@max_guesses = 8
 
   def initialize
-    text_game_descripton
-    text_player_codebreaker
     @solution = generate_code
     @player = Player.new
     @round = 0
@@ -184,5 +171,21 @@ class Game
   end
 end
 
+# Class for Game descriptions
+class GameDescription
+  def self.game_description
+    puts "Welcome to MASTERMIND. Mastermind is a game of skill, in which two players engage in a battle of wits and logic. One of the players is called the CODEMAKER, and this player chooses, then hides, a secret code, which the other player, who is called the CODEBREAKER, must attempt to discover.\nThe CODEMAKER generates a code which is made up of four numbers, ranging from 1 to 9. The CODEBREAKER then tries to guess the code and receives a hint after each attempt:
+    🟢 if the number at is at its correct position.
+    🟡 if the number is indeed in the code BUT not at this position
+    🔴 if the number is not in the code.\n\n"
+  end
+
+  def self.player_codebreaker
+    puts "You are the CODEBREAKER. You have 8 tries to crack the secret combination. If you are ready to take on the computer type in your name and lets begin!\n"
+  end
+end
+
 # ------------------ Run Code ------------------
+GameDescription.game_description 
+GameDescription.player_codebreaker
 Game.start_game
