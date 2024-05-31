@@ -70,10 +70,11 @@ end
 class Computer
   include CreateableCode
 
-  attr_reader :computer_code
+  attr_reader :computer_code, :guess_database
 
   def initialize
     @computer_code = generate_code
+    @guess_database = Array(1111..9999)
   end
 end
 
