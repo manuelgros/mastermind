@@ -5,7 +5,7 @@ require 'pry-byebug'
 # ------------------ Modules ------------------
 # Module for Code creation
 module CreateableCode
-  private
+  protected
 
   def generate_code
     Array.new(4).map { rand(1..9).to_s }
@@ -22,7 +22,6 @@ module CreateableCode
   #   else
   #     code
   #   end
-      
 end
 
 # Modules for Notifications
@@ -67,6 +66,17 @@ GAME OVER"
 end
 
 # ------------------ Classes ------------------
+# Class for Computer
+class Computer
+  include CreateableCode
+
+  attr_reader :computer_code
+
+  def initialize
+    @computer_code = generate_code
+  end
+end
+
 # Class for the Player
 class Player
   attr_reader :name
@@ -79,17 +89,17 @@ end
 
 # Class for the Game functions
 class Game
-  include CreateableCode
   include GameNotifications
 
   attr_accessor :round, :player_guess
-  attr_reader :max_guesses, :solution, :player
+  attr_reader :max_guesses, :solution, :player, :computer
 
   @@max_guesses = 8
 
   def initialize
-    @solution = generate_code
+    @computer = Computer.new
     @player = Player.new
+    @solution = computer.generate_code
     @round = 0
     @player_guess = []
   end
