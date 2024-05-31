@@ -10,6 +10,19 @@ module CreateableCode
   def generate_code
     Array.new(4).map { rand(1..9).to_s }
   end
+
+  # Method to choose code (not complete yet) for when Player is CODEMAKER
+  # def choose_code
+  #   begin
+  #     code = gets.chomp.to_s.split('')
+  #     raise GameNotifications::GuessError if code.length != 4 || !code.all?('1'..'9')
+  #   rescue GameNotifications::GuessError
+  #     text_wrong_code
+  #     retry
+  #   else
+  #     code
+  #   end
+      
 end
 
 # Modules for Notifications
@@ -55,6 +68,7 @@ end
 
 # ------------------ Classes ------------------
 # Class for the Player
+
 class Player
   attr_reader :name
 
