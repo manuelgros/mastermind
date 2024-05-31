@@ -72,7 +72,7 @@ class Game
   attr_accessor :round, :player_guess
   attr_reader :max_guesses, :solution, :player
 
-  @@max_guesses = 8
+  @@max_guesses = 2
 
   def initialize
     @solution = generate_code
@@ -81,12 +81,20 @@ class Game
     @player_guess = []
   end
 
+  def self.start_game
+    game = Game.new
+    game.play_full_game
+  end
+
   def play_full_game
     play_round until game_ends?
+    play_again
+  end
+
+  def play_again
     puts 'Do you want to play another round? Y/N'
     answer = gets.chomp.upcase
-    # N works, Y only repeats the qustion and answer option
-    play_full_game if answer == 'Y'
+    Game.start_game if answer == 'Y'
     exit if answer == 'N'
   end
 
@@ -164,6 +172,4 @@ class Game
 end
 
 # ------------------ Run Code ------------------
-game = Game.new
-# binding.pry
-game.play_full_game
+Game.start_game
