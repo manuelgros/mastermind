@@ -72,7 +72,7 @@ class Game
   attr_accessor :round, :player_guess
   attr_reader :max_guesses, :solution, :player
 
-  @@max_guesses = 2
+  @@max_guesses = 8
 
   def initialize
     @solution = generate_code
@@ -91,14 +91,14 @@ class Game
     play_again
   end
 
+  private
+
   def play_again
     puts 'Do you want to play another round? Y/N'
     answer = gets.chomp.upcase
     Game.start_game if answer == 'Y'
     exit if answer == 'N'
   end
-
-  private
 
   # Error not raised if guess is 4 letters FIX
   def getting_player_guess
