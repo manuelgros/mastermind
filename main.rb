@@ -100,7 +100,6 @@ class Game
     exit if answer == 'N'
   end
 
-  # Error not raised if guess is 4 letters FIX
   def getting_player_guess
     text_type_guess
     begin
