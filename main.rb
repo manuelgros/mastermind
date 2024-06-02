@@ -120,6 +120,7 @@ class Player
   end
 
   def getting_solution
+    puts 'Type in a code (4 digits between 1 and 9) and the computer will try to crack it'
     solution = gets.chomp.to_s.split('')
     raise GameNotifications::FormatError if solution.length != 4 || !solution.all?('1'..'9')
   rescue GameNotifications::FormatError
@@ -150,12 +151,12 @@ class Game
   @@max_guesses = 8
 
   def initialize
+    @human_codebreaker = select_codebreaker
     @computer = Computer.new
     @player = Player.new
     @solution = setting_solution
     @round = 0
     @player_guess = []
-    @human_codebreaker = select_codebreaker
   end
 
   def self.start_game
@@ -182,7 +183,7 @@ class Game
   end
 
   def setting_solution
-    human_codebreaker ? player.getting_solution : computer.getting_solution
+    human_codebreaker ? computer.getting_solution : player.getting_solution
   end
 
   private
@@ -265,7 +266,7 @@ class Game
   def play_round
     check_guess(setting_guess)
     add_round
-    binding.pry
+     # binding.pry
   end
 
   def game_ends?
