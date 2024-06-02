@@ -151,9 +151,9 @@ class Game
   @@max_guesses = 8
 
   def initialize
-    @human_codebreaker = select_codebreaker
     @computer = Computer.new
     @player = Player.new
+    @human_codebreaker = select_codebreaker
     @solution = setting_solution
     @round = 0
     @player_guess = []
@@ -170,7 +170,7 @@ class Game
   end
 
   def select_codebreaker
-    puts 'Do you want to be the CODEBREAKER? Y/N'
+    puts "#{player.name}, do you want to be the CODEBREAKER? Y/N"
     begin
       answer = gets.chomp.upcase
       raise GameNotifications::FormatError unless answer.eql?('Y') || answer.eql?('N')
