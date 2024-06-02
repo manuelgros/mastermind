@@ -159,6 +159,16 @@ class Game
   end
 
   # maybe use reduce instead of hint so that you have the hint array as return? (usefull for using in algorythm for computer guess)
+  # def check_guess_two(guess_array)
+  #   hint = guess_array.each_with_index.reduce(Array.new) do |hint_array, (number, i)|
+  #     next hint_array[i] = '🟢' if number_right?(number, i)
+  #     next hint_array[i] = '🟡' if number_included?(number, i)
+
+  #     hint_array[i] = '🔴'
+  #   end
+  #   text_hint(guess_array, hint)
+  # end
+
   def check_guess(guess_array)
     hint = []
     guess_array.map.with_index do |guessed_number, i|
