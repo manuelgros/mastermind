@@ -2,28 +2,6 @@
 
 require 'pry-byebug'
 
-# ------------------ Modules ------------------
-# Module for Code creation
-# module CreateableCode
-#   protected
-
-#   def generate_code
-#     Array.new(4).map { rand(1..9).to_s }
-#   end
-
-#   # Method to choose code (not complete yet) for when Player is CODEMAKER
-#   # def choose_code
-#   #   begin
-#   #     code = gets.chomp.to_s.split('')
-#   #     raise GameNotifications::FormatError if code.length != 4 || !code.all?('1'..'9')
-#   #   rescu GameNotifications::FormatError
-#   #     text_wrong_code
-#   #     retry
-#   #   else
-#   #     code
-#   #   end
-# end
-
 # Modules for Notifications
 module GameNotifications
   private
@@ -81,18 +59,7 @@ class Computer
     Array.new(4).map { rand(1..9).to_s }
   end
 
-  # Method 1 to sort out the possible combinations from array of valid guesses, using reduce to return a new array
-  # def reduce_guess_array(guessed_combination)
-  #   array.reduce([]) do |combination, return_array|
-  #     if check_guess(guessed_combination.to_s.split('')) == check_guess(combination.to_s.split(''))
-  #       return_array.push(combination)
-  #       return_array
-  #     end
-  #     return_array
-  #   end
-  # end
-
-  # Method 2, using each and .delete method to mutate @guess_databse directly
+  # Method 2, using each and .delete method to mutate @guess_databse directly. For Method 1 see /stuff
   def reduce_guess_array_two(guessed_combination)
     array.each do |possible_combination|
       if check_guess(guessed_combination.to_s.split('')) != check_guess(possible_combination.to_s.split(''))
@@ -195,6 +162,7 @@ class Game
     exit if answer == 'N'
   end
 
+  # older version of setting_guess in \stuff
   def setting_guess
     if human_codebreaker
       text_type_guess
@@ -203,23 +171,6 @@ class Game
       @player_guess = computer.getting_guess
     end
   end
-
-  # def setting_guess
-  #   if human_codebreaker == true
-  #     text_type_guess
-  #     begin
-  #       @player_guess = gets.chomp.to_s.split('')
-  #       raise GameNotifications::FormatError if @player_guess.length != 4 || !@player_guess.all?('1'..'9')
-  #     rescue GameNotifications::FormatError
-  #       text_wrong_code
-  #       retry
-  #     else
-  #       @player_guess
-  #     end
-  #   else
-  #     @player_guess = computer.take_guess
-  #   end
-  # end
 
   def number_right?(num, index)
     num == @solution[index]
