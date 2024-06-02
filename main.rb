@@ -4,32 +4,32 @@ require 'pry-byebug'
 
 # ------------------ Modules ------------------
 # Module for Code creation
-module CreateableCode
-  protected
+# module CreateableCode
+#   protected
 
-  def generate_code
-    Array.new(4).map { rand(1..9).to_s }
-  end
+#   def generate_code
+#     Array.new(4).map { rand(1..9).to_s }
+#   end
 
-  # Method to choose code (not complete yet) for when Player is CODEMAKER
-  # def choose_code
-  #   begin
-  #     code = gets.chomp.to_s.split('')
-  #     raise GameNotifications::GuessError if code.length != 4 || !code.all?('1'..'9')
-  #   rescue GameNotifications::GuessError
-  #     text_wrong_code
-  #     retry
-  #   else
-  #     code
-  #   end
-end
+#   # Method to choose code (not complete yet) for when Player is CODEMAKER
+#   # def choose_code
+#   #   begin
+#   #     code = gets.chomp.to_s.split('')
+#   #     raise GameNotifications::FormatError if code.length != 4 || !code.all?('1'..'9')
+#   #   rescu GameNotifications::FormatError
+#   #     text_wrong_code
+#   #     retry
+#   #   else
+#   #     code
+#   #   end
+# end
 
 # Modules for Notifications
 module GameNotifications
   private
 
   # Custom error class for guess format
-  class GuessError < StandardError; end
+  class FormatError < StandardError; end
 
   def text_wrong_code
     puts 'Please make sure that you only type in 4 numbers between 1 and 9:'
@@ -68,13 +68,17 @@ end
 # ------------------ Classes ------------------
 # Class for Computer
 class Computer
-  include CreateableCode
+  # include CreateableCode
 
   attr_reader :computer_code, :guess_database
 
   def initialize
     @computer_code = generate_code
     @guess_database = Array(1111..9999)
+  end
+
+  def generate_code
+    Array.new(4).map { rand(1..9).to_s }
   end
 
   # Method 1 to sort out the possible combinations from array of valid guesses, using reduce to return a new array
@@ -98,20 +102,31 @@ class Computer
   end
 
   # currently adjusted to be used with reduce_guess_array_two
-  def computer_guess
-    computer_guess = guess_database.sample
-    check_guess(computer_guess)
-    reduce_guess_array_two(computer_guess)
+  # takes always the first element from guess_databank as recommended in Swaszek strategy for Mastermind
+  def getting_guess
+    guess_database[0]
   end
 end
 
 # Class for the Player
 class Player
+  include GameNotifications
+
   attr_reader :name
 
   def initialize
     print 'Type in player name: '
     @name = gets.chomp.capitalize
+  end
+
+  def getting_guess
+    guess = gets.chomp.to_s.split('')
+    raise GameNotifications::FormatError if guess.length != 4 || !guess.all?('1'..'9')
+  rescue GameNotifications::FormatError
+    text_wrong_code
+    retry
+  else
+    guess
   end
 end
 
@@ -119,7 +134,7 @@ end
 class Game
   include GameNotifications
 
-  attr_accessor :round, :player_guess
+  attr_accessor :round, :player_guess, :human_codebreaker
   attr_reader :max_guesses, :solution, :player, :computer
 
   @@max_guesses = 8
@@ -130,6 +145,7 @@ class Game
     @solution = computer.computer_code
     @round = 0
     @player_guess = []
+    @human_codebreaker = select_codebreaker
   end
 
   def self.start_game
@@ -142,6 +158,19 @@ class Game
     play_again
   end
 
+  def select_codebreaker
+    puts 'Do you want to be the CODEBREAKER? Y/N'
+    begin
+      answer = gets.chomp.upcase
+      raise GameNotifications::FormatError unless answer.eql?('Y') || answer.eql?('N')
+    rescue GameNotifications::FormatError
+      puts 'Do you want to be the CODEBREAKER? Y/N'
+      retry
+    else
+      answer == 'Y'
+    end
+  end
+
   private
 
   def play_again
@@ -151,18 +180,31 @@ class Game
     exit if answer == 'N'
   end
 
-  def getting_player_guess
-    text_type_guess
-    begin
-      @player_guess = gets.chomp.to_s.split('')
-      raise GameNotifications::GuessError if @player_guess.length != 4 || !@player_guess.all?('1'..'9')
-    rescue GameNotifications::GuessError
-      text_wrong_code
-      retry
+  def setting_guess
+    if human_codebreaker
+      text_type_guess
+      @player_guess = player.getting_guess
     else
-      @player_guess
+      @player_guess = computer.getting_guess
     end
   end
+
+  # def setting_guess
+  #   if human_codebreaker == true
+  #     text_type_guess
+  #     begin
+  #       @player_guess = gets.chomp.to_s.split('')
+  #       raise GameNotifications::FormatError if @player_guess.length != 4 || !@player_guess.all?('1'..'9')
+  #     rescue GameNotifications::FormatError
+  #       text_wrong_code
+  #       retry
+  #     else
+  #       @player_guess
+  #     end
+  #   else
+  #     @player_guess = computer.take_guess
+  #   end
+  # end
 
   def number_right?(num, index)
     num == @solution[index]
@@ -207,7 +249,7 @@ class Game
   end
 
   def play_round
-    check_guess(getting_player_guess)
+    check_guess(setting_guess)
     add_round
     binding.pry
   end
