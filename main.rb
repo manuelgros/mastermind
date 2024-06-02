@@ -74,8 +74,12 @@ class Computer
 
   def initialize
     @computer_code = generate_code
-    @guess_database = Array(1111..9999)
+    # @guess_database = Array(1111..9999)
   end
+
+  # def check_computer_guess(num)
+  #   check_guess(num.to_s.split(''))
+  # end
 end
 
 # Class for the Player
@@ -100,7 +104,7 @@ class Game
   def initialize
     @computer = Computer.new
     @player = Player.new
-    @solution = computer.generate_code
+    @solution = computer.computer_code
     @round = 0
     @player_guess = []
   end
@@ -154,6 +158,7 @@ class Game
     exclude_direct_hits(solution).include?(num)
   end
 
+  # maybe use reduce instead of hint so that you have the hint array as return? (usefull for using in algorythm for computer guess)
   def check_guess(guess_array)
     hint = []
     guess_array.map.with_index do |guessed_number, i|
