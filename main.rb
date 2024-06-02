@@ -73,11 +73,11 @@ class Computer
   attr_reader :computer_code, :guess_database
 
   def initialize
-    @computer_code = generate_code
+    # @computer_code = generate_code
     @guess_database = Array(1111..9999)
   end
 
-  def generate_code
+  def getting_solution
     Array.new(4).map { rand(1..9).to_s }
   end
 
@@ -119,6 +119,16 @@ class Player
     @name = gets.chomp.capitalize
   end
 
+  def getting_solution
+    solution = gets.chomp.to_s.split('')
+    raise GameNotifications::FormatError if solution.length != 4 || !solution.all?('1'..'9')
+  rescue GameNotifications::FormatError
+    text_wrong_code
+    retry
+  else
+    solution
+  end
+
   def getting_guess
     guess = gets.chomp.to_s.split('')
     raise GameNotifications::FormatError if guess.length != 4 || !guess.all?('1'..'9')
@@ -142,7 +152,7 @@ class Game
   def initialize
     @computer = Computer.new
     @player = Player.new
-    @solution = computer.computer_code
+    @solution = setting_solution
     @round = 0
     @player_guess = []
     @human_codebreaker = select_codebreaker
@@ -169,6 +179,10 @@ class Game
     else
       answer == 'Y'
     end
+  end
+
+  def setting_solution
+    human_codebreaker ? player.getting_solution : computer.getting_solution
   end
 
   private
