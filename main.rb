@@ -74,12 +74,35 @@ class Computer
 
   def initialize
     @computer_code = generate_code
-    # @guess_database = Array(1111..9999)
+    @guess_database = Array(1111..9999)
   end
 
-  # def check_computer_guess(num)
-  #   check_guess(num.to_s.split(''))
+  # Method 1 to sort out the possible combinations from array of valid guesses, using reduce to return a new array
+  # def reduce_guess_array(guessed_combination)
+  #   array.reduce([]) do |combination, return_array|
+  #     if check_guess(guessed_combination.to_s.split('')) == check_guess(combination.to_s.split(''))
+  #       return_array.push(combination)
+  #       return_array
+  #     end
+  #     return_array
+  #   end
   # end
+
+  # Method 2, using each and .delete method to mutate @guess_databse directly
+  def reduce_guess_array_two(guessed_combination)
+    array.each do |possible_combination|
+      if check_guess(guessed_combination.to_s.split('')) != check_guess(possible_combination.to_s.split(''))
+        @guess_database.delete(possible_combination)
+      end
+    end
+  end
+
+  # currently adjusted to be used with reduce_guess_array_two
+  def computer_guess
+    computer_guess = guess_database.sample
+    check_guess(computer_guess)
+    reduce_guess_array_two(computer_guess)
+  end
 end
 
 # Class for the Player
@@ -158,17 +181,7 @@ class Game
     exclude_direct_hits(solution).include?(num)
   end
 
-  # maybe use reduce instead of hint so that you have the hint array as return? (usefull for using in algorythm for computer guess)
-  # def check_guess_two(guess_array)?? OR just add hint onto check_guess as return
-  #   hint = guess_array.each_with_index.reduce(Array.new) do |hint_array, (number, i)|
-  #     next hint_array[i] = '🟢' if number_right?(number, i)
-  #     next hint_array[i] = '🟡' if number_included?(number, i)
-
-  #     hint_array[i] = '🔴'
-  #   end
-  #   text_hint(guess_array, hint)
-  # end
-
+  # .reduce maybe an easier solution here? --> later
   def check_guess(guess_array)
     hint = []
     guess_array.map.with_index do |guessed_number, i|
