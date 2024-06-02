@@ -159,7 +159,7 @@ class Game
   end
 
   # maybe use reduce instead of hint so that you have the hint array as return? (usefull for using in algorythm for computer guess)
-  # def check_guess_two(guess_array)
+  # def check_guess_two(guess_array)?? OR just add hint onto check_guess as return
   #   hint = guess_array.each_with_index.reduce(Array.new) do |hint_array, (number, i)|
   #     next hint_array[i] = '🟢' if number_right?(number, i)
   #     next hint_array[i] = '🟡' if number_included?(number, i)
@@ -178,6 +178,7 @@ class Game
       hint[i] = '🔴'
     end
     text_hint(guess_array, hint)
+    hint
   end
 
   def code_cracked?(guess_array)
@@ -195,7 +196,7 @@ class Game
   def play_round
     check_guess(getting_player_guess)
     add_round
-    # binding.pry
+    binding.pry
   end
 
   def game_ends?
