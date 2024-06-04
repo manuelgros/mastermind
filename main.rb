@@ -60,9 +60,10 @@ class Computer
   end
 
   # Method 2, using each and .delete method to mutate @guess_databse directly. For Method 1 see /stuff
+  # doesn't work currently because instance of Computer can't call check_guess mehtod 
   def reduce_guess_array_two(guessed_combination)
     @guess_database.each do |possible_combination|
-      if game.check_guess(guessed_combination.to_s.split('')) != game.check_guess(possible_combination.to_s.split(''))
+      if check_guess(guessed_combination.to_s.split('')) != check_guess(possible_combination.to_s.split(''))
         @guess_database.delete(possible_combination)
       end
     end
@@ -113,7 +114,7 @@ class Game
   include GameNotifications
 
   attr_accessor :round, :player_guess, :human_codebreaker
-  attr_reader :max_guesses, :solution, :player, :computer
+  attr_reader :max_guesses, :solution, :player, :computer, :game
 
   @@max_guesses = 8
 
