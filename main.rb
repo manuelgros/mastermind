@@ -128,8 +128,9 @@ class Game
   end
 
   def self.start_game
-    game = Game.new
-    game.play_full_game
+    # game = Game.new
+    # game.play_full_game
+    Game.new.play_full_game
   end
 
   def play_full_game
