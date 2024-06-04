@@ -61,8 +61,8 @@ class Computer
 
   # Method 2, using each and .delete method to mutate @guess_databse directly. For Method 1 see /stuff
   def reduce_guess_array_two(guessed_combination)
-    array.each do |possible_combination|
-      if check_guess(guessed_combination.to_s.split('')) != check_guess(possible_combination.to_s.split(''))
+    @guess_database.each do |possible_combination|
+      if game.check_guess(guessed_combination.to_s.split('')) != game.check_guess(possible_combination.to_s.split(''))
         @guess_database.delete(possible_combination)
       end
     end
@@ -217,6 +217,7 @@ class Game
   def play_round
     check_guess(setting_guess)
     add_round
+    computer.reduce_guess_array_two(computer.getting_guess) unless human_codebreaker
      # binding.pry
   end
 
