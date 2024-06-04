@@ -45,8 +45,21 @@ end
 
 # Module with functions to interpret the code solution and guess
 module CheckCode
-  def number_right?(num, index)
-    num == @solution[index]
+  # .reduce maybe an easier solution here? --> later
+  def check_guess(solution_arr, guess_array)
+    hint = []
+    guess_array.map.with_index do |guessed_number, i|
+      next hint[i] = '🟢' if number_right?(solution_arr, guessed_number, i)
+      next hint[i] = '🟡' if number_included?(solution_arr, guessed_number, i)
+
+      hint[i] = '🔴'
+    end
+    text_hint(guess_array, hint)
+    hint
+  end
+
+  def number_right?(solution_arr, num, index)
+    num == solution_arr[index]
   end
 
   # removes all elements if dierected_hit? == true before check for included?
@@ -58,25 +71,12 @@ module CheckCode
     temp_arr
   end
 
-  def number_included?(num, _index)
-    exclude_direct_hits(solution).include?(num)
+  def number_included?(solution_arr, num, _index)
+    exclude_direct_hits(solution_arr).include?(num)
   end
 
-  # .reduce maybe an easier solution here? --> later
-  def check_guess(guess_array)
-    hint = []
-    guess_array.map.with_index do |guessed_number, i|
-      next hint[i] = '🟢' if number_right?(guessed_number, i)
-      next hint[i] = '🟡' if number_included?(guessed_number, i)
-
-      hint[i] = '🔴'
-    end
-    text_hint(guess_array, hint)
-    hint
-  end
-
-  def code_cracked?(guess_array)
-    guess_array == @solution
+  def code_cracked?(solution_arr, guess_array)
+    guess_array == solution_arr
   end
 end
 
@@ -223,14 +223,14 @@ class Game
   end
 
   def play_round
-    check_guess(setting_guess)
+    check_guess(solution, setting_guess)
     add_round
     computer.reduce_guess_array_two(computer.getting_guess) unless human_codebreaker
      # binding.pry
   end
 
   def game_ends?
-    if code_cracked?(player_guess)
+    if code_cracked?(solution, player_guess)
       text_player_won
       true
     elsif rounds_left.zero?
