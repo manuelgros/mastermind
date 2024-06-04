@@ -87,11 +87,12 @@ class Computer
   include GameNotifications
   include CheckCode
 
-  attr_reader :computer_code, :guess_database
+  attr_reader :computer_code, :guess_database, :current_game
 
-  def initialize
+  def initialize(current_game)
     # @computer_code = generate_code
     @guess_database = Array(1111..9999)
+    @current_game = current_game
   end
 
   def getting_solution
@@ -99,10 +100,10 @@ class Computer
   end
 
   # Method 2, using each and .delete method to mutate @guess_databse directly. For Method 1 see /stuff
-  # doesn't work currently because instance of Computer can't call check_guess mehtod 
-  def reduce_guess_array_two(guessed_combination)
+  # doesn't work -> check_guess call is spamming console and method seems to get stucl in endless loop
+  def reduce_guess_array_two(solution_arr, guessed_combination)
     @guess_database.each do |possible_combination|
-      if check_guess(guessed_combination.to_s.split('')) != check_guess(possible_combination.to_s.split(''))
+      if current_game.check_guess(solution_arr, guessed_combination.to_s.split('')) != current_game.check_guess(possible_combination.to_s.split(''), guessed_combination.to_s.split(''))
         @guess_database.delete(possible_combination)
       end
     end
@@ -159,7 +160,7 @@ class Game
   @@max_guesses = 8
 
   def initialize
-    @computer = Computer.new
+    @computer = Computer.new(self)
     @player = Player.new
     @human_codebreaker = select_codebreaker
     @solution = setting_solution
@@ -223,10 +224,10 @@ class Game
   end
 
   def play_round
+    binding.pry
     check_guess(solution, setting_guess)
     add_round
-    computer.reduce_guess_array_two(computer.getting_guess) unless human_codebreaker
-     # binding.pry
+    computer.reduce_guess_array_two(solution, player_guess) unless human_codebreaker
   end
 
   def game_ends?
