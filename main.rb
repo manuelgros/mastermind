@@ -43,10 +43,49 @@ GAME OVER"
   end
 end
 
+# Module with functions to interpret the code solution and guess
+module CheckCode
+  def number_right?(num, index)
+    num == @solution[index]
+  end
+
+  # removes all elements if dierected_hit? == true before check for included?
+  def exclude_direct_hits(array)
+    temp_arr = []
+    array.each_with_index do |n, i|
+      temp_arr << n if array[i] != player_guess[i]
+    end
+    temp_arr
+  end
+
+  def number_included?(num, _index)
+    exclude_direct_hits(solution).include?(num)
+  end
+
+  # .reduce maybe an easier solution here? --> later
+  def check_guess(guess_array)
+    hint = []
+    guess_array.map.with_index do |guessed_number, i|
+      next hint[i] = '🟢' if number_right?(guessed_number, i)
+      next hint[i] = '🟡' if number_included?(guessed_number, i)
+
+      hint[i] = '🔴'
+    end
+    text_hint(guess_array, hint)
+    hint
+  end
+
+  def code_cracked?(guess_array)
+    guess_array == @solution
+  end
+end
+
 # ------------------ Classes ------------------
 # Class for Computer
 class Computer
   # include CreateableCode
+  include GameNotifications
+  include CheckCode
 
   attr_reader :computer_code, :guess_database
 
@@ -112,6 +151,7 @@ end
 # Class for the Game functions
 class Game
   include GameNotifications
+  include CheckCode
 
   attr_accessor :round, :player_guess, :human_codebreaker
   attr_reader :max_guesses, :solution, :player, :computer, :game
@@ -172,40 +212,6 @@ class Game
     else
       @player_guess = computer.getting_guess
     end
-  end
-
-  def number_right?(num, index)
-    num == @solution[index]
-  end
-
-  # removes all elements if dierected_hit? == true before check for included?
-  def exclude_direct_hits(array)
-    temp_arr = []
-    array.each_with_index do |n, i|
-      temp_arr << n if array[i] != player_guess[i]
-    end
-    temp_arr
-  end
-
-  def number_included?(num, _index)
-    exclude_direct_hits(solution).include?(num)
-  end
-
-  # .reduce maybe an easier solution here? --> later
-  def check_guess(guess_array)
-    hint = []
-    guess_array.map.with_index do |guessed_number, i|
-      next hint[i] = '🟢' if number_right?(guessed_number, i)
-      next hint[i] = '🟡' if number_included?(guessed_number, i)
-
-      hint[i] = '🔴'
-    end
-    text_hint(guess_array, hint)
-    hint
-  end
-
-  def code_cracked?(guess_array)
-    guess_array == @solution
   end
 
   def rounds_left
