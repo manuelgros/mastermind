@@ -73,8 +73,6 @@ class Computer
     end
   end
 
-  # currently adjusted to be used with reduce_guess_array_two
-  # takes always the first element from guess_databank as recommended in Swaszek strategy for Mastermind
   def getting_guess
     current_game.round.zero? ? guess_database[11].to_s.split('') : guess_database[0].to_s.split('')
   end
@@ -133,8 +131,6 @@ class Game
   end
 
   def self.start_game
-    # game = Game.new
-    # game.play_full_game
     Game.new.play_full_game
   end
 
@@ -162,7 +158,6 @@ class Game
 
   # private
 
-  # older version of setting_guess in \stuff
   def setting_guess
     if human_codebreaker
       text_type_guess
