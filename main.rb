@@ -75,7 +75,7 @@ class Computer
   # currently adjusted to be used with reduce_guess_array_two
   # takes always the first element from guess_databank as recommended in Swaszek strategy for Mastermind
   def getting_guess
-    guess_database[0].to_s.split('')
+    current_game.round.zero? ? guess_database[11].to_s.split('') : guess_database[0].to_s.split('')
   end
 end
 
