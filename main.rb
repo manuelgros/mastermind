@@ -43,49 +43,11 @@ GAME OVER"
   end
 end
 
-# Module with functions to interpret the code solution and guess
-module CheckCode
-  # .reduce maybe an easier solution here? --> later
-  def check_guess(solution_arr, guess_array)
-    hint = []
-    guess_array.map.with_index do |guessed_number, i|
-      next hint[i] = '🟢' if number_right?(solution_arr, guessed_number, i)
-      next hint[i] = '🟡' if number_included?(solution_arr, guessed_number, i)
-
-      hint[i] = '🔴'
-    end
-    text_hint(guess_array, hint)
-    hint
-  end
-
-  def number_right?(solution_arr, num, index)
-    num == solution_arr[index]
-  end
-
-  # removes all elements if dierected_hit? == true before check for included?
-  def exclude_direct_hits(array)
-    temp_arr = []
-    array.each_with_index do |n, i|
-      temp_arr << n if array[i] != player_guess[i]
-    end
-    temp_arr
-  end
-
-  def number_included?(solution_arr, num, _index)
-    exclude_direct_hits(solution_arr).include?(num)
-  end
-
-  def code_cracked?(solution_arr, guess_array)
-    guess_array == solution_arr
-  end
-end
-
 # ------------------ Classes ------------------
 # Class for Computer
 class Computer
   # include CreateableCode
   include GameNotifications
-  include CheckCode
 
   attr_reader :computer_code, :guess_database, :current_game
 
@@ -152,7 +114,6 @@ end
 # Class for the Game functions
 class Game
   include GameNotifications
-  include CheckCode
 
   attr_accessor :round, :player_guess, :human_codebreaker
   attr_reader :max_guesses, :solution, :player, :computer, :game
@@ -198,13 +159,6 @@ class Game
 
   private
 
-  def play_again
-    puts 'Do you want to play another round? Y/N'
-    answer = gets.chomp.upcase
-    Game.start_game if answer == 'Y'
-    exit if answer == 'N'
-  end
-
   # older version of setting_guess in \stuff
   def setting_guess
     if human_codebreaker
@@ -213,6 +167,46 @@ class Game
     else
       @player_guess = computer.getting_guess
     end
+  end
+
+  def check_guess(solution_arr, guess_array)
+    hint = []
+    guess_array.map.with_index do |guessed_number, i|
+      next hint[i] = '🟢' if number_right?(solution_arr, guessed_number, i)
+      next hint[i] = '🟡' if number_included?(solution_arr, guessed_number, i)
+
+      hint[i] = '🔴'
+    end
+    text_hint(guess_array, hint)
+    hint
+  end
+
+  def number_right?(solution_arr, num, index)
+    num == solution_arr[index]
+  end
+
+  # removes all elements if dierected_hit? == true before check for included?
+  def exclude_direct_hits(array)
+    temp_arr = []
+    array.each_with_index do |n, i|
+      temp_arr << n if array[i] != player_guess[i]
+    end
+    temp_arr
+  end
+
+  def number_included?(solution_arr, num, _index)
+    exclude_direct_hits(solution_arr).include?(num)
+  end
+
+  def code_cracked?(solution_arr, guess_array)
+    guess_array == solution_arr
+  end
+
+  def play_again
+    puts 'Do you want to play another round? Y/N'
+    answer = gets.chomp.upcase
+    Game.start_game if answer == 'Y'
+    exit if answer == 'N'
   end
 
   def rounds_left
@@ -224,7 +218,7 @@ class Game
   end
 
   def play_round
-    binding.pry
+    # binding.pry
     check_guess(solution, setting_guess)
     add_round
     computer.reduce_guess_array_two(solution, player_guess) unless human_codebreaker
