@@ -118,7 +118,7 @@ class Game
   attr_accessor :round, :player_guess, :human_codebreaker
   attr_reader :max_guesses, :solution, :player, :computer, :game
 
-  @@max_guesses = 8
+  MAX_GUESSES = 8
 
   def initialize
     @computer = Computer.new(self)
@@ -210,7 +210,7 @@ class Game
   end
 
   def rounds_left
-    @@max_guesses - round
+    MAX_GUESSES - round
   end
 
   def add_round
