@@ -65,7 +65,7 @@ class Computer
   # doesn't work -> check_guess call is spamming console and method seems to get stucl in endless loop
   def reduce_guess_array_two(solution_arr, guessed_combination)
     @guess_database.each do |possible_combination|
-      if current_game.check_guess(solution_arr, guessed_combination.to_s.split('')) != current_game.check_guess(possible_combination.to_s.split(''), guessed_combination.to_s.split(''))
+      if current_game.check_guess(solution_arr, guessed_combination) != current_game.check_guess(possible_combination.to_s.split(''), guessed_combination)
         @guess_database.delete(possible_combination)
       end
     end
