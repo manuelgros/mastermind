@@ -139,6 +139,19 @@ class Game
     play_again
   end
 
+  def check_guess(solution_arr, guess_array)
+    hint = []
+    guess_array.map.with_index do |guessed_number, i|
+      next hint[i] = '🟢' if number_right?(solution_arr, guessed_number, i)
+      next hint[i] = '🟡' if number_included?(solution_arr, guessed_number, i)
+
+      hint[i] = '🔴'
+    end
+    hint
+  end
+
+  private
+
   def select_codebreaker
     puts "#{player.name}, do you want to be the CODEBREAKER? Y/N"
     begin
@@ -156,8 +169,6 @@ class Game
     human_codebreaker ? computer.getting_solution : player.getting_solution
   end
 
-  # private
-
   def setting_guess
     if human_codebreaker
       text_type_guess
@@ -165,17 +176,6 @@ class Game
     else
       @player_guess = computer.getting_guess
     end
-  end
-
-  def check_guess(solution_arr, guess_array)
-    hint = []
-    guess_array.map.with_index do |guessed_number, i|
-      next hint[i] = '🟢' if number_right?(solution_arr, guessed_number, i)
-      next hint[i] = '🟡' if number_included?(solution_arr, guessed_number, i)
-
-      hint[i] = '🔴'
-    end
-    hint
   end
 
   def number_right?(solution_arr, num, index)
