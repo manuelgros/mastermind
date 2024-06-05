@@ -120,7 +120,7 @@ class Game
   attr_accessor :round, :player_guess, :guess_result, :human_codebreaker
   attr_reader :max_guesses, :solution, :player, :computer, :game
 
-  MAX_GUESSES = 30
+  MAX_GUESSES = 8
 
   def initialize
     @computer = Computer.new(self)
