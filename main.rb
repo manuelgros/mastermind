@@ -178,7 +178,6 @@ class Game
 
       hint[i] = '🔴'
     end
-    text_hint(guess_array, hint)
     hint
   end
 
@@ -221,6 +220,7 @@ class Game
   def play_round
     # binding.pry
     check_guess(solution, setting_guess)
+    text_hint(player_guess, hint)
     add_round
     computer.reduce_guess_array_two(solution, player_guess) unless human_codebreaker
   end
