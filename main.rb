@@ -49,7 +49,8 @@ class Computer
   # include CreateableCode
   include GameNotifications
 
-  attr_reader :computer_code, :guess_database, :current_game
+  attr_reader :computer_code, :current_game
+  attr_accessor :guess_database
 
   def initialize(current_game)
     # @computer_code = generate_code
@@ -63,10 +64,10 @@ class Computer
 
   # Method 2, using each and .delete method to mutate @guess_databse directly. For Method 1 see /stuff
   # doesn't work -> check_guess call is spamming console and method seems to get stucl in endless loop
-  def reduce_guess_array_two(solution_arr, guessed_combination)
-    @guess_database.each do |possible_combination|
-      if current_game.check_guess(solution_arr, guessed_combination) != current_game.check_guess(possible_combination.to_s.split(''), guessed_combination)
-        @guess_database.delete(possible_combination)
+  def reduce_guess_array_two(hint_arr, guessed_combination)
+    guess_database.each do |possible_combination|
+      if current_game.check_guess(possible_combination.to_s.split(''), guessed_combination) != hint_arr
+        guess_database.delete(possible_combination)
       end
     end
   end
@@ -218,11 +219,11 @@ class Game
   end
 
   def play_round
-    # binding.pry
     check_guess(solution, setting_guess)
     text_hint(player_guess, hint)
     add_round
-    computer.reduce_guess_array_two(solution, player_guess) unless human_codebreaker
+    computer.reduce_guess_array_two(hint, player_guess) unless human_codebreaker
+    binding.pry
   end
 
   def game_ends?
