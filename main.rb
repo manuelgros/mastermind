@@ -115,7 +115,7 @@ end
 class Game
   include GameNotifications
 
-  attr_accessor :round, :player_guess, :human_codebreaker
+  attr_accessor :round, :player_guess, :hint, :human_codebreaker
   attr_reader :max_guesses, :solution, :player, :computer, :game
 
   MAX_GUESSES = 8
@@ -127,6 +127,7 @@ class Game
     @solution = setting_solution
     @round = 0
     @player_guess = []
+    @hint = []
   end
 
   def self.start_game
@@ -157,7 +158,7 @@ class Game
     human_codebreaker ? computer.getting_solution : player.getting_solution
   end
 
-  private
+  # private
 
   # older version of setting_guess in \stuff
   def setting_guess
@@ -170,7 +171,7 @@ class Game
   end
 
   def check_guess(solution_arr, guess_array)
-    hint = []
+    # hint = []
     guess_array.map.with_index do |guessed_number, i|
       next hint[i] = '🟢' if number_right?(solution_arr, guessed_number, i)
       next hint[i] = '🟡' if number_included?(solution_arr, guessed_number, i)
