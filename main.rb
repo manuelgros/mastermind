@@ -71,9 +71,9 @@ class Computer
   end
 
   # Method to get rid of unviable combinations after each guess, based on the returning hint
-  def reduce_guess_array(last_hint, guessed_combination)
+  def reduce_guess_array(hint_array, guessed_combination)
     guess_database.reduce([]) do |return_array, possible_combination|
-      if current_game.check_guess(possible_combination.to_s.split(''), guessed_combination) == last_hint
+      if current_game.check_guess(possible_combination.to_s.split(''), guessed_combination) == hint_array
         return_array << possible_combination
         return_array
       end
@@ -122,7 +122,7 @@ end
 class Game
   include GameNotifications
 
-  attr_accessor :round, :player_guess, :guess_result, :human_codebreaker
+  attr_accessor :round, :player_guess, :last_hint, :human_codebreaker
   attr_reader :max_guesses, :solution, :player, :computer, :game
 
   MAX_GUESSES = 8
@@ -135,7 +135,7 @@ class Game
     @solution = setting_solution
     @round = 0
     @player_guess = []
-    @guess_result = []
+    @last_hint = []
   end
 
   def self.start_game
@@ -223,11 +223,11 @@ class Game
   end
 
   def play_round
-    @guess_result = check_guess(solution, setting_guess)
-    text_hint(player_guess, guess_result)
+    @last_hint = check_guess(solution, setting_guess)
+    text_hint(player_guess, last_hint)
     add_round
     # binding.pry
-    computer.reduce_guess_array(guess_result, player_guess) unless human_codebreaker
+    computer.reduce_guess_array(last_hint, player_guess) unless human_codebreaker
   end
 
   def game_ends?
