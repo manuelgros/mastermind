@@ -41,9 +41,9 @@ GAME OVER"
     puts "You have #{@@max_guesses - add_round} tries left"
   end
 
-  def text_hint(player_guess, hint)
+  def text_hint(last_guess, hint)
     puts "| A  | B  | C  | D  |
-| #{player_guess[0]}  | #{player_guess[1]}  | #{player_guess[2]}  | #{player_guess[3]}  |
+| #{last_guess[0]}  | #{last_guess[1]}  | #{last_guess[2]}  | #{last_guess[3]}  |
 | #{hint[0]} | #{hint[1]} | #{hint[2]} | #{hint[3]} |"
   end
 
@@ -116,7 +116,7 @@ end
 class Game
   include GameNotifications
 
-  attr_accessor :round, :player_guess, :last_hint, :human_codebreaker
+  attr_accessor :round, :last_guess, :last_hint, :human_codebreaker
   attr_reader :max_guesses, :solution, :player, :computer, :game
 
   MAX_GUESSES = 8
@@ -128,7 +128,7 @@ class Game
     text_player_role(human_codebreaker)
     @solution = setting_solution
     @round = 0
-    @player_guess = []
+    @last_guess = []
     @last_hint = []
   end
 
@@ -174,9 +174,9 @@ class Game
   def setting_guess
     if human_codebreaker
       text_type_guess
-      @player_guess = player.getting_combination
+      @last_guess = player.getting_combination
     else
-      @player_guess = computer.getting_guess
+      @last_guess = computer.getting_guess
     end
   end
 
@@ -188,7 +188,7 @@ class Game
   def exclude_direct_hits(array)
     temp_arr = []
     array.each_with_index do |n, i|
-      temp_arr << n if array[i] != player_guess[i]
+      temp_arr << n if array[i] != last_guess[i]
     end
     temp_arr
   end
@@ -218,14 +218,14 @@ class Game
 
   def play_round
     @last_hint = check_guess(solution, setting_guess)
-    text_hint(player_guess, last_hint)
+    text_hint(last_guess, last_hint)
     add_round
     # binding.pry
-    computer.reduce_guess_array(last_hint, player_guess) unless human_codebreaker
+    computer.reduce_guess_array(last_hint, last_guess) unless human_codebreaker
   end
 
   def game_ends?
-    if code_cracked?(solution, player_guess)
+    if code_cracked?(solution, last_guess)
       text_player_won
       true
     elsif rounds_left.zero?
