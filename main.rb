@@ -32,10 +32,10 @@ GAME OVER"
   def text_player_won
     if round == 1
       puts "Good job #{human_codebreaker ? player.name : 'computer'}, you cracked the code on your firs try!!
-A true Mastermind!"
+A true Mastermind!\n\n"
     else
       puts "Good job #{human_codebreaker ? player.name : 'computer'}, you cracked the code in #{round} tries!!
-A true Mastermind!"
+A true Mastermind!\n\n"
     end
   end
 
