@@ -40,13 +40,13 @@ A true Mastermind!"
   end
 
   def text_rounds_left
-    puts "You have #{@@max_guesses - add_round} tries left"
+    puts rounds_left > 1 ? "You have #{rounds_left} tries left\n\n" : "LAST TRY!\n\n"
   end
 
   def text_hint(last_guess, hint)
     puts "| A  | B  | C  | D  |
 | #{last_guess[0]}  | #{last_guess[1]}  | #{last_guess[2]}  | #{last_guess[3]}  |
-| #{hint[0]} | #{hint[1]} | #{hint[2]} | #{hint[3]} |"
+| #{hint[0]} | #{hint[1]} | #{hint[2]} | #{hint[3]} |\n\n"
   end
 
   def text_type_guess
@@ -56,9 +56,9 @@ A true Mastermind!"
 
   def text_player_role(condition)
     if condition
-      puts 'YOU ARE THE CODEBREAKER. You have 8 tries to crack the secret combination.'
+      puts "YOU ARE THE CODEBREAKER. You have 8 tries to crack the secret combination.\n\n"
     else
-      puts 'YOU ARE THE CODEMAKER. Choose a code of 4 numbers between 1 and 9. The computer will try to crack it.'
+      puts "YOU ARE THE CODEMAKER. Choose a code of 4 numbers between 1 and 9. The computer will try to crack it.\n\n"
     end
   end
 end
@@ -222,6 +222,7 @@ class Game
     @last_hint = check_guess(solution, setting_guess)
     text_hint(last_guess, last_hint)
     add_round
+    text_rounds_left
     # binding.pry
     computer.reduce_guess_array(last_hint, last_guess) unless human_codebreaker
   end
