@@ -14,16 +14,16 @@ module GameNotifications
   end
 
   def text_player_lost
-    puts "Sorry #{player.name}, that was your last guess.
+    puts "Sorry #{human_codebreaker ? player.name : 'computer'}, that was your last guess.
 The right code was #{solution[0]} #{solution[1]} #{solution[2]} #{solution[3]}.
 GAME OVER"
   end
 
   def text_player_won
     if round == 1
-      puts "Good job #{player.name}, you cracked the code on your firs try!!\nA true Mastermind!"
+      puts "Good job #{human_codebreaker ? player.name : 'computer'}, you cracked the code on your firs try!!\nA true Mastermind!"
     else
-      puts "Good job #{player.name}, you cracked the code in #{round} tries!!\nA true Mastermind!"
+      puts "Good job #{human_codebreaker ? player.name : 'computer'}, you cracked the code in #{round} tries!!\nA true Mastermind!"
     end
   end
 
@@ -40,6 +40,14 @@ GAME OVER"
   def text_type_guess
     puts "#{@player.name.upcase} TYPE IN YOUR"
     print "#{round + 1}. GUESS: "
+  end
+
+  def text_player_role(condition)
+    if condition
+      puts 'YOU ARE THE CODEBREAKER. You have 8 tries to crack the secret combination.'
+    else
+      puts 'YOU ARE THE CODEMAKER. Choose a code of 4 numbers between 1 and 9. The computer will try to crack it.'
+    end
   end
 end
 
@@ -90,7 +98,6 @@ class Player
   end
 
   def getting_solution
-    puts 'Type in a code (4 digits between 1 and 9) and the computer will try to crack it'
     solution = gets.chomp.to_s.split('')
     raise GameNotifications::FormatError if solution.length != 4 || !solution.all?('1'..'9')
   rescue GameNotifications::FormatError
@@ -124,6 +131,7 @@ class Game
     @computer = Computer.new(self)
     @player = Player.new
     @human_codebreaker = select_codebreaker
+    text_player_role(human_codebreaker)
     @solution = setting_solution
     @round = 0
     @player_guess = []
@@ -153,15 +161,15 @@ class Game
   private
 
   def select_codebreaker
-    puts "#{player.name}, do you want to be the CODEBREAKER? Y/N"
+    puts "#{player.name}, do you want to be the CODEBREAKER (1) or CODEMAKER (2)?"
     begin
-      answer = gets.chomp.upcase
-      raise GameNotifications::FormatError unless answer.eql?('Y') || answer.eql?('N')
+      answer = gets.chomp
+      raise GameNotifications::FormatError unless answer.eql?('1') || answer.eql?('2')
     rescue GameNotifications::FormatError
-      puts 'Do you want to be the CODEBREAKER? Y/N'
+      puts 'Please select 1 for CODEBREAKER or 2 for CODEMAKER'
       retry
     else
-      answer == 'Y'
+      answer == '1'
     end
   end
 
@@ -246,14 +254,9 @@ class GameDescription
     🟡 if the number is indeed in the code BUT not at this position
     🔴 if the number is not in the code.\n\n"
   end
-
-  def self.player_codebreaker
-    puts "YOU ARE THE CODEBREAKER. You have 8 tries to crack the secret combination. If you are ready to take on the 
-    CODEMAKER (computer) type in your name and lets begin!\n"
-  end
 end
 
 # ------------------ Run Code ------------------
 GameDescription.game_description 
-GameDescription.player_codebreaker
+# GameDescription.player_codebreaker
 Game.start_game
