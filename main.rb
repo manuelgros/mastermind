@@ -7,10 +7,20 @@ module GameNotifications
   private
 
   # Custom error class for guess format
-  class FormatError < StandardError; end
+  class FormatError < StandardError
+    def self.secure_entry
+      combination = gets.chomp.to_s.split('')
+      raise GameNotifications::FormatError if combination.length != 4 || !combination.all?('1'..'9')
+    rescue GameNotifications::FormatError
+      text_wrong_code
+      retry
+    else
+      combination
+    end
 
-  def text_wrong_code
-    puts 'Please make sure that you only type in 4 numbers between 1 and 9:'
+    def self.text_wrong_code
+      puts 'Please make sure that you only type in 4 numbers between 1 and 9:'
+    end
   end
 
   def text_player_lost
@@ -97,24 +107,8 @@ class Player
     @name = gets.chomp.capitalize
   end
 
-  def getting_solution
-    solution = gets.chomp.to_s.split('')
-    raise GameNotifications::FormatError if solution.length != 4 || !solution.all?('1'..'9')
-  rescue GameNotifications::FormatError
-    text_wrong_code
-    retry
-  else
-    solution
-  end
-
-  def getting_guess
-    guess = gets.chomp.to_s.split('')
-    raise GameNotifications::FormatError if guess.length != 4 || !guess.all?('1'..'9')
-  rescue GameNotifications::FormatError
-    text_wrong_code
-    retry
-  else
-    guess
+  def getting_combination
+    GameNotifications::FormatError.secure_entry
   end
 end
 
@@ -174,13 +168,13 @@ class Game
   end
 
   def setting_solution
-    human_codebreaker ? computer.getting_solution : player.getting_solution
+    human_codebreaker ? computer.getting_solution : player.getting_combination
   end
 
   def setting_guess
     if human_codebreaker
       text_type_guess
-      @player_guess = player.getting_guess
+      @player_guess = player.getting_combination
     else
       @player_guess = computer.getting_guess
     end
