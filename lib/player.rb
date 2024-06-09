@@ -9,7 +9,7 @@ class Player
   attr_reader :name
 
   def initialize
-    print 'Type in player name: '
+    print 'Type in player name: '.colorize(:blue)
     @name = gets.chomp.capitalize
   end
 

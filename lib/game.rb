@@ -47,7 +47,7 @@ class Game
   private
 
   def select_codebreaker
-    puts "#{player.name}, do you want to be the CODEBREAKER (1) or CODEMAKER (2)?"
+    puts "#{player.name}, do you want to be the CODEBREAKER (1) or CODEMAKER (2)?".colorize(:blue)
     begin
       answer = gets.chomp
       raise GameNotifications::FormatError unless answer.eql?('1') || answer.eql?('2')
@@ -94,7 +94,7 @@ class Game
   end
 
   def play_again
-    puts 'Do you want to play another round? Y/N'
+    puts 'Do you want to play another round? Y/N'.colorize(:blue)
     answer = gets.chomp.upcase
     Game.start_game if answer == 'Y'
     exit if answer == 'N'
