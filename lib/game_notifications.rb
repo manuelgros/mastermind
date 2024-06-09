@@ -40,7 +40,7 @@ A true Mastermind!\n\n".colorize(:green)
   end
 
   def text_rounds_left
-    puts rounds_left > 1 ? "You have #{rounds_left} tries left\n\n".colorize(:yellow) : "LAST TRY!\n\n".colorize(:red)
+    puts rounds_left > 1 ? "You have #{rounds_left} tries left\n\n".colorize(:light_yellow) : "LAST TRY!\n\n".colorize(:red)
   end
 
   def text_hint(last_guess, hint)

@@ -14,6 +14,6 @@ class GameDescription
     
     🟢 if the number at is at its correct position.
     🟡 if the number is indeed in the code BUT not at this position
-    🔴 if the number is not in the code.\n\n".colorize(:yellow)
+    🔴 if the number is not in the code.\n\n".colorize(:light_yellow)
   end
 end
