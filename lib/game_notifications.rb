@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'colorize'
+
 # Modules for Notifications
 module GameNotifications
   private
@@ -17,7 +19,7 @@ module GameNotifications
     end
 
     def self.text_wrong_code
-      puts 'Please make sure that you only type in 4 numbers between 1 and 9:'
+      puts 'Please make sure that you only type in 4 numbers between 1 and 9:'.colorize(:red)
     end
   end
 
