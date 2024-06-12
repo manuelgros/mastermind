@@ -30,10 +30,18 @@ A true Mastermind!\n\n".colorize(:green)
     puts rounds_left > 1 ? "You have #{rounds_left} tries left\n\n".colorize(:light_yellow) : "LAST TRY!\n\n".colorize(:red)
   end
 
-  def text_hint(last_guess, hint)
+  def text_hint(guess, hint)
     puts "Position:    | A  | B  | C  | D  |
-Last Guess:  | #{last_guess[0]}  | #{last_guess[1]}  | #{last_guess[2]}  | #{last_guess[3]}  |
+Last Guess:  | #{guess[0]}  | #{guess[1]}  | #{guess[2]}  | #{guess[3]}  |
 Hint:        | #{hint[0]} | #{hint[1]} | #{hint[2]} | #{hint[3]} |\n\n".colorize(:blue)
+  end
+
+  def text_hint_visual(guess, hint)
+    print "\n"
+    show_code(guess)
+    print "   "
+    show_clue(hint)
+    print "\n\n"
   end
 
   def text_type_guess

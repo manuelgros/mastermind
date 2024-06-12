@@ -4,11 +4,13 @@ require_relative 'player'
 require_relative 'computer'
 require_relative 'game_notifications'
 require_relative 'game_logic'
+require_relative 'display'
 
 # Class for the Game functions
 class Game
   include GameNotifications
   include GameLogic
+  include Display
 
   attr_accessor :round, :last_guess, :last_hint, :human_codebreaker
   attr_reader :max_guesses, :solution, :player, :computer, :game
@@ -52,7 +54,7 @@ Type '2' to be the CODEMAKER".colorize(:blue)
 
   def play_one_round
     @last_hint = check_guess(solution, setting_guess)
-    text_hint(last_guess, last_hint)
+    text_hint_visual(last_guess, last_hint)
     add_round
     text_rounds_left
     # binding.pry

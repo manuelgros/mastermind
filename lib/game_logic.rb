@@ -5,10 +5,10 @@ module GameLogic
   def check_guess(solution_arr, guess_array)
     hint = []
     guess_array.map.with_index do |guessed_number, i|
-      next hint[i] = '🟢' if direct_hit?(solution_arr, guessed_number, i)
-      next hint[i] = '🟡' if number_included?(solution_arr, guessed_number, i)
+      next hint[i] = '!' if direct_hit?(solution_arr, guessed_number, i)
+      next hint[i] = '?' if number_included?(solution_arr, guessed_number, i)
 
-      hint[i] = '🔴'
+      hint[i] = 'x'
     end
     hint
   end
