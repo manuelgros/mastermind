@@ -38,10 +38,12 @@ class Game
   private
 
   def select_codebreaker
-    puts "#{player.name}, do you want to be the CODEBREAKER (1) or CODEMAKER (2)?".colorize(:blue)
+    puts "#{player.name}, choose your role!
+Type '1' to be the CODEBREAKER
+Type '2' to be the CODEMAKER".colorize(:blue)
     answer = gets.chomp
     if answer != '1' && answer != '2'
-      puts 'Please select ONLY 1 or 2 as answere'.colorize(:red)
+      puts 'Unvalid input. Type 1 for CODEBREAKER or 2 for CODEMAKER'.colorize(:red)
       select_codebreaker
     else
       answer == '1'
