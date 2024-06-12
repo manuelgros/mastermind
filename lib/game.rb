@@ -27,11 +27,11 @@ class Game
   end
 
   def self.start_game
-    Game.new.play_full_game
+    Game.new.play
   end
 
-  def play_full_game
-    play_round until game_ends?
+  def play
+    play_one_round until game_ends?
     play_again
   end
 
@@ -80,7 +80,7 @@ class Game
     @round += 1
   end
 
-  def play_round
+  def play_one_round
     @last_hint = check_guess(solution, setting_guess)
     text_hint(last_guess, last_hint)
     add_round
