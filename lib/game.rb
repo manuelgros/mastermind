@@ -92,10 +92,14 @@ class Game
   end
 
   def play_again
-    puts 'Do you want to play another round? Y/N'.colorize(:blue)
+    puts 'Do you want to play another round? Type Y for YES.'.colorize(:blue)
     answer = gets.chomp.upcase
-    Game.start_game if answer == 'Y'
-    exit if answer == 'N'
+    if answer == 'Y'
+      Game.start_game
+    else
+      puts 'Thanks for playing!'
+      exit
+    end
   end
 
   def rounds_left
