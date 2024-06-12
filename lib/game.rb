@@ -3,10 +3,12 @@
 require_relative 'player'
 require_relative 'computer'
 require_relative 'game_notifications'
+require_relative 'game_logic'
 
 # Class for the Game functions
 class Game
   include GameNotifications
+  include GameLogic
 
   attr_accessor :round, :last_guess, :last_hint, :human_codebreaker
   attr_reader :max_guesses, :solution, :player, :computer, :game
@@ -33,16 +35,16 @@ class Game
     play_again
   end
 
-  def check_guess(solution_arr, guess_array)
-    hint = []
-    guess_array.map.with_index do |guessed_number, i|
-      next hint[i] = '🟢' if direct_hit?(solution_arr, guessed_number, i)
-      next hint[i] = '🟡' if number_included?(solution_arr, guessed_number, i)
+  # def check_guess(solution_arr, guess_array)
+  #   hint = []
+  #   guess_array.map.with_index do |guessed_number, i|
+  #     next hint[i] = '🟢' if direct_hit?(solution_arr, guessed_number, i)
+  #     next hint[i] = '🟡' if number_included?(solution_arr, guessed_number, i)
 
-      hint[i] = '🔴'
-    end
-    hint
-  end
+  #     hint[i] = '🔴'
+  #   end
+  #   hint
+  # end
 
   private
 
@@ -70,26 +72,26 @@ class Game
     end
   end
 
-  def direct_hit?(solution_arr, num, index)
-    num == solution_arr[index]
-  end
+  # def direct_hit?(solution_arr, num, index)
+  #   num == solution_arr[index]
+  # end
 
-  # removes all elements if dierected_hit? == true before check for included?
-  def exclude_direct_hits(array)
-    temp_arr = []
-    array.each_with_index do |n, i|
-      temp_arr << n if array[i] != last_guess[i]
-    end
-    temp_arr
-  end
+  # # removes all elements if dierected_hit? == true before check for included?
+  # def exclude_direct_hits(array)
+  #   temp_arr = []
+  #   array.each_with_index do |n, i|
+  #     temp_arr << n if array[i] != last_guess[i]
+  #   end
+  #   temp_arr
+  # end
 
-  def number_included?(solution_arr, num, _index)
-    exclude_direct_hits(solution_arr).include?(num)
-  end
+  # def number_included?(solution_arr, num, _index)
+  #   exclude_direct_hits(solution_arr).include?(num)
+  # end
 
-  def code_cracked?(solution_arr, guess_array)
-    guess_array == solution_arr
-  end
+  # def code_cracked?(solution_arr, guess_array)
+  #   guess_array == solution_arr
+  # end
 
   def play_again
     puts 'Do you want to play another round? Type Y for YES.'.colorize(:blue)
