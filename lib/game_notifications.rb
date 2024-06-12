@@ -31,7 +31,7 @@ A true Mastermind!\n\n".colorize(:green)
   end
 
   def text_hint(last_guess, hint)
-    puts "             | A  | B  | C  | D  |
+    puts "Position:    | A  | B  | C  | D  |
 Last Guess:  | #{last_guess[0]}  | #{last_guess[1]}  | #{last_guess[2]}  | #{last_guess[3]}  |
 Hint:        | #{hint[0]} | #{hint[1]} | #{hint[2]} | #{hint[3]} |\n\n".colorize(:blue)
   end
