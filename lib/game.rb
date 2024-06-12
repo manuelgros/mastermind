@@ -48,25 +48,6 @@ class Game
     end
   end
 
-  def play_again
-    puts 'Do you want to play another round? Type Y for YES.'.colorize(:blue)
-    answer = gets.chomp.upcase
-    if answer == 'Y'
-      Game.start_game
-    else
-      puts 'Thanks for playing!'
-      exit
-    end
-  end
-
-  def rounds_left
-    MAX_GUESSES - round
-  end
-
-  def add_round
-    @round += 1
-  end
-
   def play_one_round
     @last_hint = check_guess(solution, setting_guess)
     text_hint(last_guess, last_hint)
@@ -76,6 +57,14 @@ class Game
     computer.reduce_guess_array(last_hint, last_guess) unless human_codebreaker
   end
 
+  def add_round
+    @round += 1
+  end
+
+  def rounds_left
+    MAX_GUESSES - round
+  end
+
   def game_ends?
     if code_cracked?(solution, last_guess)
       text_player_won
@@ -83,6 +72,17 @@ class Game
     elsif rounds_left.zero?
       text_player_lost
       true
+    end
+  end
+
+  def play_again
+    puts 'Do you want to play another round? Type Y for YES.'.colorize(:blue)
+    answer = gets.chomp.upcase
+    if answer == 'Y'
+      Game.start_game
+    else
+      puts 'Thanks for playing!'
+      exit
     end
   end
 end
