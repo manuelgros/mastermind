@@ -6,8 +6,8 @@ require 'colorize'
 class GameDescription
   def self.game_description
     puts "WELCOME TO MASTERMIND. Mastermind is a game of skill, in which two players engage in a battle of wits and
-    logic. One of the players is called the CODEMAKER, and this player chooses, then hides, a secret code, which the
-    other player, who is called the CODEBREAKER, must attempt to discover.
+    logic. In this version you will compete with a computer opponent. One will take on the role of CODEMAKER, who 
+    creates a secret code, which the other player, who is called the CODEBREAKER, must attempt to discover.
     The CODEMAKER generates a code which is made up of four numbers, ranging from 1 to 9
     (numbers can be used multiple times). The CODEBREAKER then tries to
     guess the code and receives a hint after each attempt:
