@@ -38,7 +38,7 @@ class Game
   private
 
   def select_codebreaker
-    puts "#{player.name}, choose your role!
+    puts "\n#{player.name}, choose your role!
 Type '1' to be the CODEBREAKER
 Type '2' to be the CODEMAKER".colorize(:blue)
     answer = gets.chomp

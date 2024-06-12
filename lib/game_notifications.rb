@@ -31,9 +31,9 @@ A true Mastermind!\n\n".colorize(:green)
   end
 
   def text_hint(last_guess, hint)
-    puts "Position:    | A  | B  | C  | D  |
-Last Guess:  | #{last_guess[0]}  | #{last_guess[1]}  | #{last_guess[2]}  | #{last_guess[3]}  |
-Hint:        | #{hint[0]} | #{hint[1]} | #{hint[2]} | #{hint[3]} |\n\n".colorize(:blue)
+    puts "\nPosition:    | A  | B  | C  | D  |".colorize(:blue)
+    puts "Last Guess:  | #{last_guess[0]}  | #{last_guess[1]}  | #{last_guess[2]}  | #{last_guess[3]}  |"
+    puts "Hint:        | #{hint[0]} | #{hint[1]} | #{hint[2]} | #{hint[3]} |\n\n".colorize(:light_green)
   end
 
   def text_type_guess
@@ -43,9 +43,9 @@ Hint:        | #{hint[0]} | #{hint[1]} | #{hint[2]} | #{hint[3]} |\n\n".colorize
 
   def text_player_role(condition)
     if condition
-      puts "YOU ARE THE CODEBREAKER. You have 8 tries to crack the secret combination.\n\n".colorize(:blue)
+      puts "\nYOU ARE THE CODEBREAKER. You have 8 tries to crack the secret combination.\n".colorize(:blue)
     else
-      puts "YOU ARE THE CODEMAKER. Choose a code of 4 numbers between 1 and 9. The computer will try to crack it.\n\n".colorize(:blue)
+      puts "\nYOU ARE THE CODEMAKER. Choose a code of 4 numbers between 1 and 9. The computer will try to crack it.\n".colorize(:blue)
     end
   end
 end
