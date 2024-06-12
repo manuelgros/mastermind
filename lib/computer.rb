@@ -13,18 +13,18 @@ class Computer
 
   def initialize(current_game)
     # @computer_code = generate_code
-    @code_database = Array(1111..9999)
+    @code_database = Array('1111'..'9999')
     @current_game = current_game
   end
 
   def getting_solution
-    code_database.sample.to_s.split('')
+    code_database.sample.split('')
   end
 
   # Method to get rid of unviable combinations after each guess, based on the returning hint
   def reduce_guess_array(hint_array, guessed_combination)
     code_database.reduce([]) do |return_array, possible_combination|
-      if current_game.check_guess(possible_combination.to_s.split(''), guessed_combination) == hint_array
+      if current_game.check_guess(possible_combination.split(''), guessed_combination) == hint_array
         return_array << possible_combination
         return_array
       end
@@ -33,6 +33,6 @@ class Computer
   end
 
   def getting_guess
-    current_game.round.zero? ? code_database[11].to_s.split('') : code_database[0].to_s.split('')
+    current_game.round.zero? ? code_database[11].split('') : code_database[0].split('')
   end
 end
