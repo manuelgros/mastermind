@@ -18,6 +18,6 @@ class Player
     return combination unless combination.length != 4 || !combination.all?('1'..'9')
 
     text_wrong_code
-    secure_entry
+    getting_combination
   end
 end
