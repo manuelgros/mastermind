@@ -13,6 +13,8 @@ module GameLogic
     hint
   end
 
+  private
+
   def direct_hit?(solution_arr, num, index)
     num == solution_arr[index]
   end
