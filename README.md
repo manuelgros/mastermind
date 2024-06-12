@@ -12,7 +12,9 @@ The CODEMAKER generates a code which is made up of four numbers, ranging from 1 
 guess the code and receives a hint after each attempt:
 
 🟢 if the number at is at its correct position.
+
 🟡 if the number is indeed in the code BUT not at this position
+
 🔴 if the number is not in the code.
 
 You can choose at the start of each round if you want to play as CODEMAKER or CODEBREAKER.
