@@ -83,7 +83,7 @@ Type '2' to be the CODEMAKER".colorize(:blue)
     if answer == 'Y'
       Game.start_game
     else
-      puts 'Thanks for playing!'
+      puts 'Thanks for playing!'.colorize(:blue)
       exit
     end
   end
