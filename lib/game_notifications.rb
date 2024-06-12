@@ -12,8 +12,8 @@ module GameNotifications
 
   def text_player_lost
     puts "Sorry #{human_codebreaker ? player.name : 'computer'}, that was your last guess.
-The right code was #{solution[0]} #{solution[1]} #{solution[2]} #{solution[3]}.
-GAME OVER".colorize(:blue)
+The right code was ".blue + "#{solution[0]} #{solution[1]} #{solution[2]} #{solution[3]}.".green
+    puts 'GAME OVER'.red
   end
 
   def text_player_won
@@ -27,7 +27,7 @@ A true Mastermind!\n\n".colorize(:green)
   end
 
   def text_rounds_left
-    puts rounds_left > 1 ? "You have #{rounds_left} tries left\n\n".colorize(:light_yellow) : "LAST TRY!\n\n".colorize(:red)
+    puts rounds_left > 1 ? "You have #{rounds_left} tries left\n\n".light_yellow : "LAST TRY!\n\n".red
   end
 
   def text_hint(last_guess, hint)

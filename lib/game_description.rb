@@ -12,8 +12,8 @@ class GameDescription
     (numbers can be used multiple times). The CODEBREAKER then tries to
     guess the code and receives a hint after each attempt:\n".colorize(:blue)
 
-    puts "🟢 #{'=> if the number at is at its correct position'.colorize(:green)}
-🟡 #{'=> if the number is in code BUT not at this position'.colorize(:yellow)}
-🔴 #{'=> if the number is not in the code'.colorize(:red)}\n\n"
+    puts "🟢 #{'=> if the number at is at its correct position'.colorize(:color => :green, :mode => :underline)}
+🟡 #{'=> if the number is in code BUT not at this position'.colorize(:color => :yellow, :mode => :underline)}
+🔴 #{'=> if the number is not in the code'.colorize(:color => :red, :mode => :underline)}\n\n"
   end
 end
