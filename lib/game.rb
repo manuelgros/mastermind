@@ -36,7 +36,7 @@ class Game
   def check_guess(solution_arr, guess_array)
     hint = []
     guess_array.map.with_index do |guessed_number, i|
-      next hint[i] = '🟢' if number_right?(solution_arr, guessed_number, i)
+      next hint[i] = '🟢' if direct_hit?(solution_arr, guessed_number, i)
       next hint[i] = '🟡' if number_included?(solution_arr, guessed_number, i)
 
       hint[i] = '🔴'
@@ -70,7 +70,7 @@ class Game
     end
   end
 
-  def number_right?(solution_arr, num, index)
+  def direct_hit?(solution_arr, num, index)
     num == solution_arr[index]
   end
 
