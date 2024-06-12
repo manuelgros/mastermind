@@ -11,7 +11,7 @@ class GameDescription
     The CODEMAKER generates a code which is made up of four numbers, ranging from 1 to 9
     (numbers can be used multiple times). The CODEBREAKER then tries to
     guess the code and receives a hint after each attempt:
-    
+
     🟢 if the number at is at its correct position.
     🟡 if the number is indeed in the code BUT not at this position
     🔴 if the number is not in the code.\n\n".colorize(:light_yellow)
