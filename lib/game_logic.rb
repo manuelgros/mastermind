@@ -15,6 +15,19 @@ module GameLogic
 
   private
 
+  def setting_solution
+    human_codebreaker ? computer.getting_solution : player.getting_combination
+  end
+
+  def setting_guess
+    if human_codebreaker
+      text_type_guess
+      @last_guess = player.getting_combination
+    else
+      @last_guess = computer.getting_guess
+    end
+  end
+
   def direct_hit?(solution_arr, num, index)
     num == solution_arr[index]
   end

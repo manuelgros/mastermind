@@ -48,19 +48,6 @@ class Game
     end
   end
 
-  def setting_solution
-    human_codebreaker ? computer.getting_solution : player.getting_combination
-  end
-
-  def setting_guess
-    if human_codebreaker
-      text_type_guess
-      @last_guess = player.getting_combination
-    else
-      @last_guess = computer.getting_guess
-    end
-  end
-
   def play_again
     puts 'Do you want to play another round? Type Y for YES.'.colorize(:blue)
     answer = gets.chomp.upcase
