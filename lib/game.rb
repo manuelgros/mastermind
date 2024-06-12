@@ -48,12 +48,10 @@ class Game
 
   def select_codebreaker
     puts "#{player.name}, do you want to be the CODEBREAKER (1) or CODEMAKER (2)?".colorize(:blue)
-    begin
-      answer = gets.chomp
-      raise GameNotifications::FormatError unless answer.eql?('1') || answer.eql?('2')
-    rescue GameNotifications::FormatError
-      puts 'Please select 1 for CODEBREAKER or 2 for CODEMAKER'
-      retry
+    answer = gets.chomp
+    if answer != '1' && answer != '2'
+      puts 'Please select ONLY 1 or 2 as answere'.colorize(:red)
+      select_codebreaker
     else
       answer == '1'
     end

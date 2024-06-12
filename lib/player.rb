@@ -14,6 +14,10 @@ class Player
   end
 
   def getting_combination
-    GameNotifications::FormatError.secure_entry
+    combination = gets.chomp.to_s.split('')
+    return combination unless combination.length != 4 || !combination.all?('1'..'9')
+
+    text_wrong_code
+    secure_entry
   end
 end

@@ -6,21 +6,8 @@ require 'colorize'
 module GameNotifications
   private
 
-  # Custom error class for guess format
-  class FormatError < StandardError
-    def self.secure_entry
-      combination = gets.chomp.to_s.split('')
-      raise GameNotifications::FormatError if combination.length != 4 || !combination.all?('1'..'9')
-    rescue GameNotifications::FormatError
-      text_wrong_code
-      retry
-    else
-      combination
-    end
-
-    def self.text_wrong_code
-      puts 'Please make sure that you only type in 4 numbers between 1 and 9:'.colorize(:red)
-    end
+  def text_wrong_code
+    puts 'Please make sure that you only type in 4 numbers between 1 and 9:'.colorize(:red)
   end
 
   def text_player_lost
@@ -44,9 +31,9 @@ A true Mastermind!\n\n".colorize(:green)
   end
 
   def text_hint(last_guess, hint)
-    puts "| A  | B  | C  | D  |
-| #{last_guess[0]}  | #{last_guess[1]}  | #{last_guess[2]}  | #{last_guess[3]}  |
-| #{hint[0]} | #{hint[1]} | #{hint[2]} | #{hint[3]} |\n\n".colorize(:blue)
+    puts "             | A  | B  | C  | D  |
+Last Guess:  | #{last_guess[0]}  | #{last_guess[1]}  | #{last_guess[2]}  | #{last_guess[3]}  |
+Hint:       | #{hint[0]} | #{hint[1]} | #{hint[2]} | #{hint[3]} |\n\n".colorize(:blue)
   end
 
   def text_type_guess
