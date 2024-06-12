@@ -1,0 +1,50 @@
+def get_player_guess
+    puts "#{@player.name} type in your guess:"
+    player_guess = gets.chomp.to_s.split('')
+    if player_guess.length != 4
+      puts 'Please make sure that you only type in 4 number between 1 and 9:'
+      player_guess = gets.chomp.to_s.split('')
+    else
+      @round += 1
+      player_guess
+    end
+  end
+
+
+  # Class to create a code (currently: randomly)
+class Code
+  attr_reader :code
+
+  def initialize
+    @code = Array.new(4).map { |val| val = rand(1..9).to_s }
+  end
+end
+
+
+# Method 2, using each and .delete method to mutate @guess_databse directly. -> Didn't seem to work, too many guesses necassary
+def reduce_guess_array_two(last_hint, guessed_combination)
+  guess_database.each do |possible_combination|
+    if current_game.check_guess(possible_combination.to_s.split(''), guessed_combination) != last_hint
+      guess_database.delete(possible_combination)
+    end
+  end
+end
+
+
+# has been split up and replaced by combinations of methods. Stored for review
+def setting_guess
+  if human_codebreaker == true
+    text_type_guess
+    begin
+      @player_guess = gets.chomp.to_s.split('')
+      raise GameNotifications::FormatError if @player_guess.length != 4 || !@player_guess.all?('1'..'9')
+    rescue GameNotifications::FormatError
+      text_wrong_code
+      retry
+    else
+      @player_guess
+    end
+  else
+    @player_guess = computer.take_guess
+  end
+end
