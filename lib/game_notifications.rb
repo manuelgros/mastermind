@@ -12,8 +12,8 @@ module GameNotifications
 
   def text_player_lost
     puts "Sorry #{human_codebreaker ? player.name : 'computer'}, that was your last guess.
-The right code was ".blue + "#{solution[0]} #{solution[1]} #{solution[2]} #{solution[3]}.".green
-    puts 'GAME OVER'.red
+The right code was ".blue + "#{solution[0]} #{solution[1]} #{solution[2]} #{solution[3]}.".green.underline
+    puts "GAME OVER\n".red.bold
   end
 
   def text_player_won
