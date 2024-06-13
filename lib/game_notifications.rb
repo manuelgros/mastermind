@@ -10,11 +10,13 @@ module GameNotifications
     puts 'Please make sure that you only type in 4 numbers between 1 and 9:'.colorize(:red)
   end
 
+  # rubocop: disable Metrics/AbcSize
   def text_player_lost
     puts "Sorry #{human_codebreaker ? player.name : 'computer'}, that was your last guess.
 The right code was ".blue + "#{solution[0]} #{solution[1]} #{solution[2]} #{solution[3]}.".green.underline
     puts "GAME OVER\n".red.bold
   end
+  # rubocop: enable Metrics/AbcSize
 
   def text_player_won
     if round == 1
