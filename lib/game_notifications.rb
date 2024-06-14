@@ -47,7 +47,8 @@ A true Mastermind!\n\n".colorize(:green)
     if condition
       puts "\nYOU ARE THE CODEBREAKER. You have 8 tries to crack the secret combination.\n".colorize(:blue)
     else
-      puts "\nYOU ARE THE CODEMAKER. Choose a code of 4 numbers between 1 and 9. The computer will try to crack it.\n".colorize(:blue)
+      puts "\nYOU ARE THE CODEMAKER. Choose a code of 4 numbers between 1 and 9."\
+" The computer will try to crack it.\n".colorize(:blue)
     end
   end
 end
