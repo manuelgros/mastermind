@@ -18,7 +18,7 @@ class Computer
   end
 
   def getting_solution
-    code_database.sample.split('')
+    Array.new(4).map { rand(1..9).to_s }
   end
 
   # Method to get rid of unviable combinations after each guess, based on the returning hint
