@@ -9,11 +9,12 @@ class Computer
   include GameNotifications
 
   attr_reader :computer_code, :current_game
-  attr_accessor :code_database
+  attr_accessor :code_database, :code_database_raw
 
   def initialize(current_game)
     # @computer_code = generate_code
-    @code_database = Array('1111'..'9999')
+    @code_database = Array('1111'..'9999').reject { |num| num.include?('0') }
+    # @code_database = code_database_raw.each { |num| code_database_raw.delete(num) if num.include?('0') }
     @current_game = current_game
   end
 
@@ -34,5 +35,6 @@ class Computer
 
   def getting_guess
     current_game.round.zero? ? code_database[11].split('') : code_database[0].split('')
+    # current_game.round.zero? ? code_database.sample.split('') : code_database[0].split('')
   end
 end
